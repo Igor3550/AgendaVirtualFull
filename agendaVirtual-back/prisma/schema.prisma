@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id        Int         @id   @default(autoincrement())
+  name      String
+  price     Int 
+  duration  Int
+  createdAt DateTime    @default(now())
+  Schedule  Schedule[]
+  Waiting   Waiting[]
+
+  @@map("services")
+
+}
+
+model Schedule {
+  id          Int        @id   @default(autoincrement())
+  clientName  String 
+  date        String
+  hour        Int
+  service_id  Int
+  finished    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  Service     Service    @relation(fields: [service_id], references: [id])
+
+  @@map("schedules")
+}
+
+model Waiting {
+  id          Int        @id   @default(autoincrement())
+  clientName  String 
+  date        DateTime 
+  service_id  Int
+  createdAt   DateTime   @default(now())
+  Service     Service    @relation(fields: [service_id], references: [id])
+
+  @@map("waitings")
+}
