@@ -35,3 +35,5 @@ Algumas das tecnologias utilizadas para o desenvolvimento deste projeto:
   #### `git clone https://github.com/Igor3550/AgendaVirtualFull.git`
 - 2 - rodar o docker-compose na pasta raiz do projeto
   #### `docker-compose up --build`
+
+#### OBS: A aplicação roda na porta :3000
