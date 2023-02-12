@@ -1,13 +1,12 @@
 import * as React from 'react';
 import styled from "styled-components";
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Box } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 
 import { hoursList } from '../utils/getHoursList';
 import { useGetServices } from '../../hooks/Api/useServices';
-import { DatePicker } from '@mui/x-date-pickers';
 
 export const InputArea = ({ ...otherProps }) => {
   return (
@@ -38,17 +37,21 @@ export const DateSelect = ({label, value, handleForm }) => {
   return (
     <Calendar>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Stack spacing={3}>
-          <DatePicker
-            label={label}
-            inputFormat="DD/MM/YYYY"
-            openTo="day"
-            views={['day']}
-            value={value}
-            onChange={handleForm}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </Stack>
+        <DatePicker
+          className='date-picker'
+          label={label}
+          inputFormat="DD/MM/YYYY"
+          openTo="day"
+          views={['day']}
+          value={value}
+          onChange={handleForm}
+          renderInput={({ inputRef, inputProps, InputProps }) => (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <DateInput ref={inputRef} {...inputProps} />
+              {InputProps?.endAdornment}
+            </Box>
+          )}
+        />
       </LocalizationProvider>
     </Calendar>
   );
@@ -108,6 +111,12 @@ const Input = styled.input`
     color: #fff;
     opacity: 0.7;
   }
+
+  @media (max-width: 800px){
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+  }
 `;
 
 const Select = styled.select`
@@ -121,20 +130,46 @@ const Select = styled.select`
   margin: 10px 0;
   outline: none;
   padding: 10px;
+
+  @media (max-width: 800px){
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+  }
 `;
 
 const Calendar = styled.div`
   width: 100%;
-  background-color: #FFA3CF;
   border-radius: 10px;
-  padding: 7px;
+  padding: 5px 0;
   color: #fff;
   margin-bottom: 10px;
+
+  .date-picker{
+    height: 40px;
+  }
+`;
+
+const DateInput = styled.input`
+  width: 100%;
+  height: 50px;
+  background-color: #FFA3CF;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  outline: none;
+  padding: 10px;
+
+  ::placeholder{
+    color: #fff;
+    opacity: 0.7;
+  }
+
 `;
 
 const HoursArea = styled.div`
   width: 100%;
-  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -152,7 +187,9 @@ const HoursArea = styled.div`
     display: flex;
     flex-direction: row;
     margin-top: 8px;
+    flex-wrap: wrap;
   }
+
 `;
 
 const Hour = styled.div`

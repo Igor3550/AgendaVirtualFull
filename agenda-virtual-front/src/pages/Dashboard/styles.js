@@ -11,12 +11,19 @@ export const DashboardArea = styled.div`
 `;
 
 export const Container = styled.div`
-  min-width: 780px;
-  min-height: 775px;
+  width: 780px;
+  height: 775px;
   display: flex;
   border-radius: 10px 10px 0 0;
   padding-top: 30px;
   justify-content: center;
   background-color: #FF5CA1;
   overflow-y: auto;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 100vh;
+
+    border-radius: 0;
+  }
 `;

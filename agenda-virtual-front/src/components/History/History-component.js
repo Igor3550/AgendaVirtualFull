@@ -36,4 +36,9 @@ const Container = styled.div`
   p{
     margin: 4px 0;
   }
+
+  @media (max-width: 800px){
+    width: 80%;
+    font-size: 16px;
+  }
 `;

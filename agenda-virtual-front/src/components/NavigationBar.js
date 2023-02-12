@@ -6,7 +6,6 @@ import { BsPersonCheckFill, BsPersonCheck, BsPeople, BsPeopleFill } from "react-
 
 export function NavigationBar() {
   const location = useLocation();
-  console.log(location.pathname);
 
   function checkSelected(selected){
     if(`/${selected}` === location.pathname) return true;
@@ -64,5 +63,10 @@ const Container = styled.div`
   .icons {
 		color: #ffffff;
 		font-size: 30px;
+  }
+
+  @media (max-width: 800px){
+    width: 100%;
+    border-radius: 0;
   }
 `;

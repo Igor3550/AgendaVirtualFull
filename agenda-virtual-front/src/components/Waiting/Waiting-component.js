@@ -48,10 +48,10 @@ export const WaitingComponent = ({ client, refetch }) => {
         <p><strong>Data: </strong>{dayjs(client.date).format('DD/MM/YYYY')}</p>
         <p><strong>Serviço: </strong>{serviceClient}</p>
       </ClientInfo>
-      <div>
+      <ButtonsArea>
         <Button onClick={handleAddClient} type="create">+</Button>
         <Button onClick={handleDeleteClient} >-</Button>
-      </div>
+      </ButtonsArea>
     </Component>
   );
 }
@@ -67,9 +67,13 @@ const Component = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
   p{
     margin: 4px 0;
+  }
 
+  @media (max-width: 800px){
+    width: 80%;
   }
 `;
 
@@ -97,4 +101,10 @@ const Button = styled.button`
   :hover{
     cursor: pointer;
   }
+
+`;
+
+const ButtonsArea = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

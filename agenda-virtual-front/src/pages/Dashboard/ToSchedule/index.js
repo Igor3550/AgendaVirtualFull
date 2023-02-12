@@ -18,7 +18,7 @@ const ToSchedulePage = () => {
   const { isFetching, refetch, error } = useQuery('get-day-hours', 
     async () => await getDayHours(dayjs(waiting.value.date ? waiting.value.date : form.date).format('YYYY-MM-DD')), 
     {
-      onSuccess: (data) => {setDateHours(data); console.log(data, form.date)},
+      onSuccess: (data) => {setDateHours(data)},
       onError: () => setDateHours()
     });
 
@@ -37,9 +37,7 @@ const ToSchedulePage = () => {
   }, [form.date]);
 
   async function handleSubmit() {
-    //console.log(sendScheduleBody);
     setPostScheduleLoading(true);
-    console.log(form);
     if(!verifyScheduleForm()) return alert("Preencha os campos corretamente!");
 
     try {
@@ -51,7 +49,6 @@ const ToSchedulePage = () => {
       }
 
       const response = await createSchedule(body);
-      console.log(response.data);
       alert("Angendamento concluido!");
       resetForm({
         name: '',
@@ -150,6 +147,13 @@ const ToScheduleContainer = styled.div`
 
   >h1{
     color: #fff;
+  }
+
+  @media (max-width: 800px){
+    >div{
+      width: 100%;
+      font-size: 16px;
+    }
   }
 `;
 

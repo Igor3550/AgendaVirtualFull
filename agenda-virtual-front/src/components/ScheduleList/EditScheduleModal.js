@@ -156,6 +156,13 @@ const ModalArea = styled.div`
   p{
     color: #fff;
   }
+
+  @media (max-width: 800px){
+    width: 85%;
+    font-size: 16px;
+    height: auto;
+    padding: 20px;
+  }
 `;
 
 const DateHourArea = styled.div`
@@ -164,6 +171,11 @@ const DateHourArea = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 800px){
+    width: 100%;
+    font-size: 16px;
+  }
 `;
 
 const Background = styled.div`

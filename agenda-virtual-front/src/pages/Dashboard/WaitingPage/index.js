@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 const WaitingPage = () => {
   const [form, handleForm, resetForm] = useForm();
   const [addingLoading, setAddingLoading] = useState(false);
-  const { data, isLoading, error, refetch } = useQuery('get-waiting-list', getWaiting);
+  const { data, isLoading, refetch } = useQuery('get-waiting-list', getWaiting);
 
   async function handleAddToWaiting() {
     if(!form.name) return alert('Preencha corretamente!');
@@ -25,7 +25,7 @@ const WaitingPage = () => {
     }
 
     try {
-      const response = await createWaiting(body);
+      await createWaiting(body);
       resetForm({
         name: '',
         date: dayjs(),
@@ -108,6 +108,13 @@ const FormContainer = styled.div`
   span{
     width: 80%;
   }
+
+  @media (max-width: 800px){
+    span{
+      width: 100%;
+    }
+
+  }
 `;
 
 const Label = styled.div`
@@ -146,5 +153,9 @@ const SubmitButton = styled.button`
   p{
     font-size: 28px;
     padding: 0 10px;
+  }
+
+  @media (max-width: 800px){
+    width: 80%;
   }
 `;
