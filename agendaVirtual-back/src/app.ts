@@ -11,13 +11,12 @@ import {
   waitingRouter
 } from './routers';
 
-loadEnv();
-
 const app = express();
 
 app
   .use(cors())
   .use(express.json())
+  .get('/status', (req, res) => res.send('OK'))
   .use('/schedule', scheduleRouter)
   .use('/date', dateRouter)
   .use('/services', serviceRouter)
@@ -32,5 +31,13 @@ export function init(): Promise<Express> {
 export async function close(): Promise<void>{
   await disconnectDB();
 }
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error(reason)
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('uncaughtException', JSON.stringify(err))
+});
 
 export default app;
