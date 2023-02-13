@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development npx nodemon src/server.ts",
+    "dev": "npx nodemon src/server.ts",
     "dev:seed": "npm run dev:load-envs prisma db seed",
     "dev:migrate": "npx prisma migrate dev && npm run dev",
     "dev:migrate:envdev": "npm run dev:load-envs prisma migrate dev",
