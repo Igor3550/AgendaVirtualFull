@@ -6,6 +6,10 @@ import {
   Navigate
 } from 'react-router-dom';
 
+import { AuthenticationPage } from './pages/Authentication';
+import { SingInPage } from './pages/Authentication/SignInPage';
+import { SingUpPage } from './pages/Authentication/SignUpPage';
+
 import Dashboard from './pages/Dashboard';
 import SchedulesPage from './pages/Dashboard/SchedulesPage';
 import ToSchedulePage from './pages/Dashboard/ToSchedule';
@@ -24,9 +28,14 @@ function App() {
       <WaitingProvider>
         <Router>
           <Routes>
-            <Route path='/' element={<><Dashboard /></>}>
+            <Route path='/' element={<><AuthenticationPage /></>}>
               <Route index path="/*" element={<Navigate to="/" />} />
-              <Route path='/' element={<SchedulesPage />} />
+              <Route path='/' element={<SingInPage />} />
+              <Route path='signup' element={<SingUpPage />} />
+            </Route>
+            <Route path='/dashboard' element={<><Dashboard /></>}>
+              <Route index path="*" element={<Navigate to="/dashboard/schedules" />} />
+              <Route path='schedules' element={<SchedulesPage />} />
               <Route path='toSchedule' element={<ToSchedulePage />} />
               <Route path='history' element={<HistoryPage />} />
               <Route path='waiting' element={<WaitingPage />} />

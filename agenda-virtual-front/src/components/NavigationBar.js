@@ -16,29 +16,29 @@ export function NavigationBar() {
       <Container>
     <IconContext.Provider value={{className:'icons'}}>
 
-        <Link to='toSchedule'>
-          {checkSelected('toSchedule') ?
+        <Link to='/dashboard/toSchedule'>
+          {checkSelected('dashboard/toSchedule') ?
             <MdPersonAddAlt1 />
             :
             <MdPersonAddAlt />
           }
         </Link>
-        <Link to='/'>
-          {checkSelected('') ?
+        <Link to='/dashboard/schedules'>
+          {checkSelected('dashboard/schedules') ?
             <BsPersonCheckFill />
             :
             <BsPersonCheck />
           }
         </Link>
-        <Link to='history'>
-          {checkSelected('history') ?
+        <Link to='/dashboard/history'>
+          {checkSelected('dashboard/history') ?
             <MdPersonSearch />
             :
             <MdOutlinePersonSearch />
           }
         </Link>
-        <Link to='waiting'>
-        {checkSelected('waiting') ?
+        <Link to='/dashboard/waiting'>
+        {checkSelected('dashboard/waiting') ?
             <BsPeopleFill />
             :
             <BsPeople />
