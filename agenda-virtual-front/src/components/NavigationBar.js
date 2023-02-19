@@ -8,7 +8,7 @@ export function NavigationBar() {
   const location = useLocation();
 
   function checkSelected(selected){
-    if(`/${selected}` === location.pathname) return true;
+    if(String(location.pathname).includes(selected)) return true;
     return false;
   }
 
@@ -16,29 +16,29 @@ export function NavigationBar() {
       <Container>
     <IconContext.Provider value={{className:'icons'}}>
 
-        <Link to='/dashboard/toSchedule'>
-          {checkSelected('dashboard/toSchedule') ?
+        <Link to='toSchedule'>
+          {checkSelected('toSchedule') ?
             <MdPersonAddAlt1 />
             :
             <MdPersonAddAlt />
           }
         </Link>
-        <Link to='/dashboard/schedules'>
-          {checkSelected('dashboard/schedules') ?
+        <Link to='schedules'>
+          {checkSelected('schedules') ?
             <BsPersonCheckFill />
             :
             <BsPersonCheck />
           }
         </Link>
-        <Link to='/dashboard/history'>
-          {checkSelected('dashboard/history') ?
+        <Link to='history'>
+          {checkSelected('history') ?
             <MdPersonSearch />
             :
             <MdOutlinePersonSearch />
           }
         </Link>
-        <Link to='/dashboard/waiting'>
-        {checkSelected('dashboard/waiting') ?
+        <Link to='waiting'>
+        {checkSelected('waiting') ?
             <BsPeopleFill />
             :
             <BsPeople />

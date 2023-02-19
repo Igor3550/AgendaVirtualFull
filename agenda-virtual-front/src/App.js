@@ -11,10 +11,16 @@ import { SingInPage } from './pages/Authentication/SignInPage';
 import { SingUpPage } from './pages/Authentication/SignUpPage';
 
 import Dashboard from './pages/Dashboard';
+import DashboardClient from './pages/DashboardClient';
 import SchedulesPage from './pages/Dashboard/SchedulesPage';
 import ToSchedulePage from './pages/Dashboard/ToSchedule';
 import HistoryPage from './pages/Dashboard/HistoryPage';
 import WaitingPage from './pages/Dashboard/WaitingPage';
+
+import ClientSchedulesPage from './pages/DashboardClient/SchedulesPage';
+import ScheduleClient from './pages/DashboardClient/ToSchedule';
+import ClientHistory from './pages/DashboardClient/HistoryPage';
+import ProfilePage from './pages/DashboardClient/ProfilePage';
 
 import { WaitingProvider } from './contexts/WaitingContext';
 
@@ -32,6 +38,13 @@ function App() {
               <Route index path="/*" element={<Navigate to="/" />} />
               <Route path='/' element={<SingInPage />} />
               <Route path='signup' element={<SingUpPage />} />
+            </Route>
+            <Route path='/dashboardclient' element={<><DashboardClient /></>}>
+              <Route index path="*" element={<Navigate to="/dashboardclient/schedules" />} />
+              <Route path='schedules' element={<ClientSchedulesPage />} />
+              <Route path='toSchedule' element={<ScheduleClient />} />
+              <Route path='history' element={<ClientHistory />} />
+              <Route path='waiting' element={<ProfilePage />} />
             </Route>
             <Route path='/dashboard' element={<><Dashboard /></>}>
               <Route index path="*" element={<Navigate to="/dashboard/schedules" />} />
