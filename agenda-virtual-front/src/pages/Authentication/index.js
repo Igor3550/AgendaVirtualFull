@@ -20,6 +20,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #C52C6C;
+  overflow-y: auto;
 `;
 
 const Content = styled.div`
