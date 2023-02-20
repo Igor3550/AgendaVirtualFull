@@ -29,6 +29,7 @@ model Schedule {
   service_id  Int
   finished    Boolean    @default(false)
   createdAt   DateTime   @default(now())
+  UserSchedules UserSchedules[]
   Service     Service    @relation(fields: [service_id], references: [id])
 
   @@map("schedules")
@@ -43,4 +44,37 @@ model Waiting {
   Service     Service    @relation(fields: [service_id], references: [id])
 
   @@map("waitings")
+}
+
+model User {
+  id            Int        @id   @default(autoincrement())
+  name          String
+  email         String
+  password      String
+  createdAt     DateTime   @default(now())
+  Session       Session[]
+  UserSchedules UserSchedules[]
+
+  @@map("users")
+}
+
+model Session {
+  id          Int        @id   @default(autoincrement())
+  userId      Int
+  token       String
+  createdAt   DateTime   @default(now())
+  User        User       @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model UserSchedules {
+  id          Int        @id   @default(autoincrement())
+  userId      Int
+  scheduleId  Int
+  createdAt   DateTime   @default(now())
+  User        User       @relation(fields: [userId], references: [id])
+  Schedule    Schedule   @relation(fields: [scheduleId], references: [id])
+
+  @@map("user_schedules")
 }

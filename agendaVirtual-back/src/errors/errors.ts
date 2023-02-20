@@ -11,3 +11,18 @@ export function badRequest() {
     message: 'Invalid body item!'
   }
 }
+
+export function conflict() {
+  return {
+    name: 'Conflict',
+    message: 'Already exists!'
+  }
+}
+
+export function unauthorizedError() {
+  return {
+    name: 'Unauthorized',
+    message: 'Unauthorized!'
+  }
+}
+
