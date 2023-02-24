@@ -40,7 +40,7 @@ function App() {
               <Route path='signup' element={<SingUpPage />} />
             </Route>
             <Route path='/dashboardclient' element={<><DashboardClient /></>}>
-              <Route index path="*" element={<Navigate to="/dashboardclient/schedules" />} />
+              <Route index path="*" element={<Navigate to="/dashboardclient/waiting" />} />
               <Route path='schedules' element={<ClientSchedulesPage />} />
               <Route path='toSchedule' element={<ScheduleClient />} />
               <Route path='history' element={<ClientHistory />} />

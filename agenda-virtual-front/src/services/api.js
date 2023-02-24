@@ -2,6 +2,15 @@ import axios from "axios";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
+function createHeaders(token) {
+  const body = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+  return body;
+}
+
 export async function getScheduleList() {
   const result = await axios.get(`${baseURL}/schedule`);
   return result.data;
@@ -35,6 +44,25 @@ export async function createSchedule(body) {
 
 export async function createWaiting(body) {
   const res = await axios.post(`${baseURL}/waiting`, body);
+
+  return res;
+}
+
+export async function signIn(body) {
+  const res = await axios.post(`${baseURL}/auth`, body);
+
+  return res;
+}
+
+export async function signUp(body) {
+  const res = await axios.post(`${baseURL}/user`, body);
+
+  return res;
+}
+
+export async function verify(token) {
+  const header = createHeaders(token);
+  const res = await axios.get(`${baseURL}/verify`, header);
 
   return res;
 }

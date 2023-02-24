@@ -10,6 +10,7 @@ import {
   scheduleRouter,
   serviceRouter,
   userRouter,
+  verifyRouter,
   waitingRouter
 } from './routers';
 
@@ -25,7 +26,8 @@ app
   .use('/history', historyRouter)
   .use('/waiting', waitingRouter)
   .use('/user', userRouter)
-  .use('/auth', auhtRouter);
+  .use('/auth', auhtRouter)
+  .use('/verify', verifyRouter);
 
 export function init(): Promise<Express> {
   connectDb();

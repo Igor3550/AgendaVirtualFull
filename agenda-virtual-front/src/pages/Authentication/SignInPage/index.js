@@ -2,12 +2,41 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { InputArea } from "../../../components/Form";
+import { useForm } from "../../../hooks/useForm";
+import { signIn, verify } from "../../../services/api";
+import useStorage from "../../../hooks/useStorage";
 
 export function SingInPage() {
   const navigate = useNavigate();
 
-  function submit(event) {
+  const [ form, handleForm, resetForm ] = useForm();
+  const [ value, setValue ] = useStorage('userInfo', {});
+
+  async function submit(event) {
     event.preventDefault();
+
+    const body = {
+      email: form.email,
+      password: form.password
+    };
+
+    try {
+      const response = await signIn(body);
+      setValue(response.data);
+      verifyToken(response.data);
+    } catch (error) {
+      alert('Ouve um erro ao tentar fazer login!');
+    }
+  }
+
+  async function verifyToken(user) {
+
+    try {
+      await verify(user.token);
+      navigate('/dashboard');
+    } catch (error) {
+      navigate('/dashboardclient');
+    }
   }
 
   return (
@@ -19,12 +48,16 @@ export function SingInPage() {
             placeholder="E-mail" 
             name="email"
             type="email"
+            value={form.email}
+            onChange={handleForm}
             required
           />
           <InputArea 
             placeholder="Senha" 
-            name="email"
+            name="password"
             type="password"
+            value={form.password}
+            onChange={handleForm}
             required
           />
           <SubmitButton>Entrar</SubmitButton>
