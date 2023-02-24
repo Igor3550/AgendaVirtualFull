@@ -1,13 +1,15 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 
-import { connectDb, disconnectDB, loadEnv } from './config';
+import { connectDb, disconnectDB } from './config';
 
 import {
+  auhtRouter,
   dateRouter,
   historyRouter,
   scheduleRouter,
   serviceRouter,
+  userRouter,
   waitingRouter
 } from './routers';
 
@@ -21,7 +23,9 @@ app
   .use('/date', dateRouter)
   .use('/services', serviceRouter)
   .use('/history', historyRouter)
-  .use('/waiting', waitingRouter);
+  .use('/waiting', waitingRouter)
+  .use('/user', userRouter)
+  .use('/auth', auhtRouter);
 
 export function init(): Promise<Express> {
   connectDb();

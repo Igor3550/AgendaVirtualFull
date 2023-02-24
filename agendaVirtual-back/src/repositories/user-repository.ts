@@ -37,6 +37,14 @@ async function createUser(name: string, email: string, password: string) {
   });
 }
 
+async function createAdminUser(userId: number) {
+  return await prisma.userAdmin.create({
+    data:{
+      userId
+    }
+  });
+}
+
 async function getUserById(id: number) {
   return await prisma.user.findFirst({
     where:{
@@ -45,15 +53,14 @@ async function getUserById(id: number) {
   });
 }
 
-async function updateUser(id: number, name: string, email: string, password: string) {
+async function updateUser(id: number, name: string, email: string) {
   return await prisma.user.update({
     where:{
       id
     },
     data:{
       name,
-      email,
-      password
+      email
     }
   });
 }
@@ -72,6 +79,7 @@ const userRepository = {
   getUserById,
   getUsersByEmail,
   createUser,
+  createAdminUser,
   updateUser,
   deleteUser
 }

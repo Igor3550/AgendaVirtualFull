@@ -54,8 +54,18 @@ model User {
   createdAt     DateTime   @default(now())
   Session       Session[]
   UserSchedules UserSchedules[]
+  UserAdmin     UserAdmin[]
 
   @@map("users")
+}
+
+model UserAdmin {
+  id            Int              @id   @default(autoincrement())
+  userId        Int
+  createdAt     DateTime         @default(now())
+  User          User             @relation(fields: [userId], references: [id])
+
+  @@map("usersAdmins")
 }
 
 model Session {
