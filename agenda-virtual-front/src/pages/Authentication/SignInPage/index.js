@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import { InputArea } from "../../../components/Form";
 import { useForm } from "../../../hooks/useForm";
@@ -12,6 +13,11 @@ export function SingInPage() {
   const [ form, handleForm, resetForm ] = useForm();
   const [ value, setValue ] = useStorage('userInfo', {});
 
+  useEffect(() => {
+    if(!value) return;
+    verifyToken(value);
+  }, [])
+
   async function submit(event) {
     event.preventDefault();
 
@@ -23,7 +29,7 @@ export function SingInPage() {
     try {
       const response = await signIn(body);
       setValue(response.data);
-      verifyToken(response.data);
+      await verifyToken(response.data);
     } catch (error) {
       alert('Ouve um erro ao tentar fazer login!');
     }
@@ -35,6 +41,8 @@ export function SingInPage() {
       await verify(user.token);
       navigate('/dashboard');
     } catch (error) {
+      if(error.response.status === 401) return;
+      console.log(error)
       navigate('/dashboardclient');
     }
   }

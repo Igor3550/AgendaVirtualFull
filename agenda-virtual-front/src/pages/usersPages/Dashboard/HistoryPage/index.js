@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getHistory } from "../../../services/api";
-import { InputArea } from "../../../components/Form";
-import { HistoryComponent } from "../../../components/History/History-component";
+
+import { getHistory } from "../../../../services/api";
+import { InputArea } from "../../../../components/Form";
+import { HistoryComponent } from "../../../../components/History/History-component";
+import useStorage from "../../../../hooks/useStorage";
 
 const HistoryPage = () => {
+  const navigate = useNavigate();
+
   const [ clientName, setClientName ] = useState('');
   const { data, isLoading, refetch } = useQuery('get-history', handleGetHistory);
+  const [value] = useStorage('userInfo', {});
 
   async function handleGetHistory() {
-    return await getHistory(clientName);
+    return await getHistory(clientName, value.token);
   }
 
   useEffect(() => {
     refetch();
+    if(!value.token) navigate('/');
   }, [clientName]);
 
   return (

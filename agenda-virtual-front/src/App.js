@@ -10,17 +10,17 @@ import { AuthenticationPage } from './pages/Authentication';
 import { SingInPage } from './pages/Authentication/SignInPage';
 import { SingUpPage } from './pages/Authentication/SignUpPage';
 
-import Dashboard from './pages/Dashboard';
-import DashboardClient from './pages/DashboardClient';
-import SchedulesPage from './pages/Dashboard/SchedulesPage';
-import ToSchedulePage from './pages/Dashboard/ToSchedule';
-import HistoryPage from './pages/Dashboard/HistoryPage';
-import WaitingPage from './pages/Dashboard/WaitingPage';
+import Dashboard from './pages/usersPages/Dashboard';
+import SchedulesPage from './pages/usersPages/Dashboard/SchedulesPage';
+import ToSchedulePage from './pages/usersPages/Dashboard/ToSchedule';
+import HistoryPage from './pages/usersPages/Dashboard/HistoryPage';
+import WaitingPage from './pages/usersPages/Dashboard/WaitingPage';
 
-import ClientSchedulesPage from './pages/DashboardClient/SchedulesPage';
-import ScheduleClient from './pages/DashboardClient/ToSchedule';
-import ClientHistory from './pages/DashboardClient/HistoryPage';
-import ProfilePage from './pages/DashboardClient/ProfilePage';
+import DashboardClient from './pages/clientsPages/DashboardClient';
+import ClientSchedulesPage from './pages/clientsPages/DashboardClient/SchedulesPage';
+import ScheduleClient from './pages/clientsPages/DashboardClient/ToSchedule';
+import ClientHistory from './pages/clientsPages/DashboardClient/HistoryPage';
+import ProfilePage from './pages/clientsPages/DashboardClient/ProfilePage';
 
 import { WaitingProvider } from './contexts/WaitingContext';
 

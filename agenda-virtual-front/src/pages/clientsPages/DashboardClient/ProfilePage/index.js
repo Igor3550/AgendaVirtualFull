@@ -1,14 +1,31 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
-import { useForm } from "../../../hooks/useForm";
-import { InputArea } from "../../../components/Form";
+import { useForm } from "../../../../hooks/useForm";
+import { InputArea } from "../../../../components/Form";
+import { Confirmation } from "../../../../components/Confirmation";
+import useStorage from "../../../../hooks/useStorage";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
-  const [form, handleForm] = useForm();
+  const navigate = useNavigate();
+
+  const [ logoutConfirmView, setLogoutConfirmView ] = useState(false);
+  const [ form, handleForm ] = useForm();
+  const [ value, setValue ] = useStorage('userInfo', {});
+
+  useEffect(() => {
+    if(!value.user) navigate('/');
+  }, [value]);
+
+  function handleLogout() {
+    navigate('/');
+    setValue({});
+  }
 
   return (
     <Container>
-      <h1>Olá, Cliente</h1>
+      <h1>Olá, {value.user ? value.user.name : ''}</h1>
       <Label>Editar perfil</Label>
       <FormContainer>
         <InputArea placeholder='Cliente' name='name' value={form.name} onChange={handleForm} />
@@ -17,8 +34,17 @@ const ProfilePage = () => {
         <InputArea placeholder='Nova senha' name='newPassword' type='password' value={form.password} onChange={handleForm} />
 
         <SubmitButton>
-          <>Salvar alterações</>
+          Salvar alterações
         </SubmitButton>
+
+        <ExitButton onClick={() => setLogoutConfirmView(true)} >
+          Sair
+        </ExitButton>
+        {logoutConfirmView ?
+          <Confirmation setConfirmationView={setLogoutConfirmView} confirmationFunction={handleLogout} />
+          :
+          <></>
+        }
       </FormContainer>
     </Container>
   );
@@ -88,6 +114,38 @@ const SubmitButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
+
+  :hover{
+    cursor: pointer;
+  }
+
+  p{
+    font-size: 28px;
+    padding: 0 10px;
+  }
+
+  @media (max-width: 800px){
+    width: 80%;
+  }
+`;
+
+const ExitButton = styled.button`
+  width: 40%;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #FFA3CF;
+  border: 0;
+  
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 
   :hover{
     cursor: pointer;

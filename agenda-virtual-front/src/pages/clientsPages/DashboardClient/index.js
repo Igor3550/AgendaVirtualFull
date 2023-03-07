@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 
-import { NavigationBar } from "../../components/NavigationBar";
+import { NavigationBar } from "../../../components/NavigationBar";
 import { 
   DashboardArea,
   Container
 } from "./styles";
 
-const Dashboard = () => {
+const DashboardClient = () => {
 
   return (
     <DashboardArea>
@@ -18,4 +18,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard;
+export default DashboardClient;

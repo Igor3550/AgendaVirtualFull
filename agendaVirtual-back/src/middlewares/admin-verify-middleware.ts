@@ -28,7 +28,7 @@ export async function adminVerifyToken(req: AuthenticatedRequest, res: Response,
       },
     });
 
-    if(!admin) return generateUnauthorizedResponse(res);
+    if(!admin) return generateBadRequestResponse(res);
 
     req.userId = userId;
     return next();
@@ -39,6 +39,10 @@ export async function adminVerifyToken(req: AuthenticatedRequest, res: Response,
 
 function generateUnauthorizedResponse(res: Response) {
   res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+}
+
+function generateBadRequestResponse(res: Response) {
+  res.status(httpStatus.BAD_REQUEST).send(unauthorizedError());
 }
 
 export type AuthenticatedRequest = Request & JWTPayload;

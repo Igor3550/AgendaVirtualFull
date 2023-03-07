@@ -2,12 +2,12 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-
-import { InputArea, SelectArea, DateSelect, HoursSelect } from "../../../components/Form";
-import { createSchedule, getDayHours } from "../../../services/api";
-import { useForm } from "../../../hooks/useForm";
 import { Oval } from "react-loader-spinner";
-import { useWainting } from "../../../contexts/WaitingContext";
+
+import { InputArea, SelectArea, DateSelect, HoursSelect } from "../../../../components/Form";
+import { createSchedule, getDayHours } from "../../../../services/api";
+import { useForm } from "../../../../hooks/useForm";
+import { useWainting } from "../../../../contexts/WaitingContext";
 
 const ToSchedulePage = () => {
   const waiting = useWainting();

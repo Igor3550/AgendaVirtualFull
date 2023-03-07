@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import styled from "styled-components";
 
-import { useForm } from "../../../hooks/useForm";
-import { DateSelect, InputArea, SelectArea } from "../../../components/Form";
-import { WaitingComponent } from "../../../components/Waiting/Waiting-component";
-import { createWaiting, getWaiting } from "../../../services/api";
+import { useForm } from "../../../../hooks/useForm";
+import { DateSelect, InputArea, SelectArea } from "../../../../components/Form";
+import { WaitingComponent } from "../../../../components/Waiting/Waiting-component";
+import { createWaiting, getWaiting } from "../../../../services/api";
 import dayjs from "dayjs";
 
 const WaitingPage = () => {

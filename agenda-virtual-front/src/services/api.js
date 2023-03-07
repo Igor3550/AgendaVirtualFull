@@ -31,8 +31,9 @@ export async function getWaiting() {
   return res.data;
 }
 
-export async function getHistory(name = null) {
-  const res = await axios.get(`${baseURL}/history?name=${name}`);
+export async function getHistory(name = null, token) {
+  const header = createHeaders(token)
+  const res = await axios.get(`${baseURL}/history?name=${name}`, header);
   return res.data;
 }
 

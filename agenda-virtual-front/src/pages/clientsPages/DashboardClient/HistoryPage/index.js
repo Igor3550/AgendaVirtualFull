@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getHistory } from "../../../services/api";
-import { InputArea } from "../../../components/Form";
-import { HistoryComponent } from "../../../components/History/History-component";
+
+import { getHistory } from "../../../../services/api";
+import { InputArea } from "../../../../components/Form";
+import { HistoryComponent } from "../../../../components/History/History-component";
 
 const HistoryPage = () => {
   const [ clientName, setClientName ] = useState('');
-  const { data, isLoading, refetch } = useQuery('get-history', handleGetHistory);
+  const { data, isLoading, refetch } = useQuery('get-client-history', handleGetHistory);
 
   async function handleGetHistory() {
     return await getHistory(clientName);
