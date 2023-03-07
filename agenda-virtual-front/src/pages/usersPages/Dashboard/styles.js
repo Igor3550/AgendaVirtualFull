@@ -8,6 +8,7 @@ export const DashboardArea = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #C52C6C;
+  position: absolute;
 `;
 
 export const Container = styled.div`
