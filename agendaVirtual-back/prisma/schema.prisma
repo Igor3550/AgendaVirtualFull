@@ -24,6 +24,7 @@ model Service {
 model Schedule {
   id          Int        @id   @default(autoincrement())
   clientName  String 
+  clientId    Int
   date        String
   hour        Int
   service_id  Int
@@ -31,6 +32,7 @@ model Schedule {
   createdAt   DateTime   @default(now())
   UserSchedules UserSchedules[]
   Service     Service    @relation(fields: [service_id], references: [id])
+  Client        Client         @relation(fields: [clientId], references: [id])
 
   @@map("schedules")
 }
@@ -47,14 +49,16 @@ model Waiting {
 }
 
 model User {
-  id            Int        @id   @default(autoincrement())
+  id            Int            @id   @default(autoincrement())
   name          String
   email         String
   password      String
-  createdAt     DateTime   @default(now())
+  clientId      Int
+  createdAt     DateTime       @default(now())
   Session       Session[]
   UserSchedules UserSchedules[]
   UserAdmin     UserAdmin[]
+  Client        Client         @relation(fields: [clientId], references: [id])
 
   @@map("users")
 }
@@ -87,4 +91,14 @@ model UserSchedules {
   Schedule    Schedule   @relation(fields: [scheduleId], references: [id])
 
   @@map("user_schedules")
+}
+
+model Client {
+  id          Int        @id   @default(autoincrement())
+  name        String
+  createdAt   DateTime   @default(now())
+  User        User[]
+  Schedule    Schedule[]
+
+  @@map("clients")
 }

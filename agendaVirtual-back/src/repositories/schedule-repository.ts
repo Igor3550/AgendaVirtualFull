@@ -20,6 +20,37 @@ async function listScheduleByDate(date: string) {
   });
 }
 
+async function listScheduleByClient(clientId: number) {
+  return prisma.schedule.findMany({
+    where: {
+      clientId,
+      finished: false
+    },
+    include: {
+      Service: true
+    }
+  });
+}
+
+async function getOpenClientSchedule(clientId: number) {
+  return prisma.schedule.findFirst({
+    where: {
+      clientId,
+      finished: false
+    }
+  });
+}
+
+async function verifyClientSchedule(clientId: number, scheduleId: number) {
+  return prisma.schedule.findFirst({
+    where: {
+      id: scheduleId,
+      clientId,
+      finished: false
+    }
+  });
+}
+
 async function getScheduleById(id: number) {
   return prisma.schedule.findFirst({
     where: {
@@ -28,10 +59,11 @@ async function getScheduleById(id: number) {
   });
 }
 
-async function insertSchedule(name: string, service_id: number, date: string, hour: number) {
+async function insertSchedule(name: string, clientId: number, service_id: number, date: string, hour: number) {
   return prisma.schedule.create({
     data: {
       clientName: name,
+      clientId,
       date,
       hour,
       service_id
@@ -74,8 +106,11 @@ async function deleteScheduleById(id: number) {
 
 const scheduleRepository = {
   getScheduleById,
+  getOpenClientSchedule,
   listSchedule,
   listScheduleByDate,
+  listScheduleByClient,
+  verifyClientSchedule,
   insertSchedule,
   updateSchedule,
   deleteScheduleById,

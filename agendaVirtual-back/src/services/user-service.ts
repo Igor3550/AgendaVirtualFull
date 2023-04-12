@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import userRepository from "../repositories/user-repository";
 import { conflict, notFound } from "../errors/errors";
 import { exclude } from "../utils/prisma-utils";
+import clientRepository from "../repositories/client-repository";
 
 async function verifyEmail(email: string) {
   const user = await userRepository.getUsersByEmail(email);
@@ -32,7 +33,13 @@ async function createUser(name: string, email: string, password: string): Promis
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await userRepository.createUser(name, email, hashedPassword);
+  let client = await clientRepository.findClientByName(name);
+
+  if(!client){
+    client = await clientRepository.createClient(name);
+  }
+
+  const user = await userRepository.createUser(name, client.id, email, hashedPassword);
 
   return {
     user: exclude(user, "password")
@@ -45,7 +52,13 @@ async function createUserAdm(name: string, email: string, password: string): Pro
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await userRepository.createUser(name, email, hashedPassword);
+  let client = await clientRepository.findClientByName(name);
+
+  if(!client){
+    client = await clientRepository.createClient(name);
+  }
+
+  const user = await userRepository.createUser(name, client.id, email, hashedPassword);
 
   await userRepository.createAdminUser(user.id);
 

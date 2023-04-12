@@ -27,10 +27,11 @@ async function getUsersByEmail(email: string) {
   return users;
 }
 
-async function createUser(name: string, email: string, password: string) {
+async function createUser(name: string, clientId: number, email: string, password: string) {
   return await prisma.user.create({
     data:{
       name,
+      clientId,
       email,
       password
     }
