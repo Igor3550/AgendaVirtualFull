@@ -2,11 +2,17 @@ import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { ScheduleListComponent } from "../../../../components/ScheduleList/ScheduleListComponent";
-import { getScheduleList } from "../../../../services/api";
+import { ScheduleListComponent } from "../../../../components/ScheduleListClient/ScheduleListComponent";
+import { getScheduleList } from "../../../../services/clientsApi";
+import useStorage from "../../../../hooks/useStorage";
 
 const SchedulesPage = () => {
-  const { data, isLoading, error, refetch } = useQuery('get-schedules', getScheduleList);
+  const { data, isLoading, error, refetch } = useQuery('get-schedules', handleGetSchedules);
+  const [value] = useStorage('userInfo', {});
+
+  async function handleGetSchedules() {
+    return await getScheduleList(value.token);
+  }
 
   if(error) return (
     <SchedulesContainer>

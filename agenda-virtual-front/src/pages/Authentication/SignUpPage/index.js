@@ -2,12 +2,31 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { InputArea } from "../../../components/Form";
+import { useForm } from "../../../hooks/useForm";
+import { signUp } from "../../../services/api";
 
 export function SingUpPage() {
   const navigate = useNavigate();
 
-  function submit(event) {
+  const [ form, handleForm, resetForm ] = useForm();
+
+  async function submit(event) {
     event.preventDefault();
+
+    const body = form;
+
+    try {
+      console.log(body);
+      await signUp(body);
+      alert("Cadastro concluido! Por favor faça login!");
+      navigate('/');
+    } catch (error) {
+      if(error.response.status === 409){
+        alert('O email já foi cadastrado! Se estiver com problemas para acessar sua conta por favor entre em contato!');
+        return
+      }
+      alert('Ouve um erro ao tentar fazer login!');
+    }
   }
 
   return (
@@ -17,20 +36,26 @@ export function SingUpPage() {
         <form onSubmit={submit}>
         <InputArea 
             placeholder="Nome" 
-            name="nome"
+            name="name"
             type="name"
+            value={form.name}
+            onChange={handleForm}
             required
           />
           <InputArea 
             placeholder="E-mail" 
             name="email"
             type="email"
+            value={form.email}
+            onChange={handleForm}
             required
           />
           <InputArea 
             placeholder="Crie uma Senha" 
             name="password"
             type="password"
+            value={form.password}
+            onChange={handleForm}
             required
           />
           <InputArea 
@@ -39,7 +64,7 @@ export function SingUpPage() {
             type="password"
             required
           />
-          <SubmitButton>Entrar</SubmitButton>
+          <SubmitButton>Cadastrar</SubmitButton>
         </form>
         <h3>Já tem uma conta?</h3>
         <GoButton onClick={() => navigate('/')}>Faça Login</GoButton>

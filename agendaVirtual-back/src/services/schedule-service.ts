@@ -3,6 +3,7 @@ import serviceRepository from '../repositories/service-repository';
 import { notFound, badRequest, conflict } from '../errors/errors';
 import { verifyDate } from '../utils/verify-date';
 import clientService from './client-service';
+import userService from './user-service';
 
 async function verifyServiceAndDate(schedule_id: number, service_id: number, date: string, hour: number) {
   const service = await serviceRepository.findById(service_id);
@@ -44,8 +45,10 @@ async function insertSchedule(name: string, service_id: number, date: string, ho
   return schedule;
 }
 
-async function insertClientSchedule(name: string, service_id: number, date: string, hour: number) {
+async function insertClientSchedule(userId: number, service_id: number, date: string, hour: number) {
   await verifyServiceAndDate(null, service_id, date, hour);
+  const user = await userService.getUserById(userId);
+  const name = user.name;
 
   let client = await clientService.getClientByName(name);
 

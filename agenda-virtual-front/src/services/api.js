@@ -16,6 +16,24 @@ export async function getScheduleList() {
   return result.data;
 }
 
+export async function createSchedule(body) {
+  const res = await axios.post(`${baseURL}/schedule`, body);
+
+  return res;
+}
+
+export async function updateSchedule(body, id) {
+  const res = await axios.put(`${baseURL}/schedule/${id}`, body);
+
+  return res;
+}
+
+export async function deleteSchedule(id) {
+  const res = await axios.delete(`${baseURL}/schedule/${id}`);
+
+  return res;
+}
+
 export async function getDayHours(date) {
   const res = await axios.get(`${baseURL}/date/hours/${date}`);
   return res.data;
@@ -35,12 +53,6 @@ export async function getHistory(name = null, token) {
   const header = createHeaders(token)
   const res = await axios.get(`${baseURL}/history?name=${name}`, header);
   return res.data;
-}
-
-export async function createSchedule(body) {
-  const res = await axios.post(`${baseURL}/schedule`, body);
-
-  return res;
 }
 
 export async function createWaiting(body) {
@@ -68,18 +80,6 @@ export async function verify(token) {
   return res;
 }
 
-export async function updateSchedule(body, id) {
-  const res = await axios.put(`${baseURL}/schedule/${id}`, body);
-
-  return res;
-}
-
-export async function deleteSchedule(id) {
-  const res = await axios.delete(`${baseURL}/schedule/${id}`);
-
-  return res;
-}
-
 export async function deleteWaiting(id) {
   const res = await axios.delete(`${baseURL}/waiting/${id}`);
 
@@ -88,6 +88,13 @@ export async function deleteWaiting(id) {
 
 export async function finishSchedule(id) {
   const res = await axios.put(`${baseURL}/schedule/finish/${id}`);
+
+  return res;
+}
+
+export async function updateUserInfo(token, body) {
+  const header = createHeaders(token);
+  const res = await axios.put(`${baseURL}/user`, body, header);
 
   return res;
 }

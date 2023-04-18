@@ -5,15 +5,17 @@ import styled from "styled-components";
 import { Oval } from "react-loader-spinner";
 
 import { InputArea, SelectArea, DateSelect, HoursSelect } from "../../../../components/Form";
-import { createSchedule, getDayHours } from "../../../../services/api";
+import { createSchedule, getDayHours } from "../../../../services/clientsApi";
 import { useForm } from "../../../../hooks/useForm";
 import { useWainting } from "../../../../contexts/WaitingContext";
+import useStorage from "../../../../hooks/useStorage";
 
 const ToSchedulePage = () => {
   const waiting = useWainting();
   const [ dateHours, setDateHours ] = useState();
   const [ postScheduleLoading, setPostScheduleLoading ] = useState(false);
   const [form, handleForm, resetForm] = useForm({date:dayjs()});
+  const [value] = useStorage('userInfo', {});
 
   const { isFetching, refetch, error } = useQuery('get-day-hours', 
     async () => await getDayHours(dayjs(waiting.value.date ? waiting.value.date : form.date).format('YYYY-MM-DD')), 
@@ -48,7 +50,7 @@ const ToSchedulePage = () => {
         service_id: Number(form.service)
       }
 
-      const response = await createSchedule(body);
+      await createSchedule(value.token, body);
       alert("Angendamento concluido!");
       resetForm({
         name: '',
@@ -58,7 +60,11 @@ const ToSchedulePage = () => {
       });
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      if(error.response.status === 409){
+        alert("Atenção! Já existe um agendamento em aberto!");
+        return
+      }
       alert("Ouve um erro ao criar agendamento! Por favor verifique os campos!");
     }
     setPostScheduleLoading(false);

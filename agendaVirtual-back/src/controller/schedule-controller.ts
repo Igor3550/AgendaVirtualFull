@@ -43,13 +43,14 @@ async function createSchedule(req: Request, res: Response) {
   }
 }
 
-async function createClientSchedule(req: Request, res: Response) {
-  const { name, date, hour, service_id } = req.body;
+async function createClientSchedule(req: AuthenticatedRequest, res: Response) {
+  const { date, hour, service_id } = req.body;
+  const userId = req.userId;
 
   const tratedDate = dayjs(date).toISOString();
 
   try {
-    const schedule = await scheduleService.insertClientSchedule(name, service_id, tratedDate, hour);
+    const schedule = await scheduleService.insertClientSchedule(userId, service_id, tratedDate, hour);
     return res.send(schedule);
   } catch (error) {
     if(error.name === 'BadRequest') return res.sendStatus(httpStatus.BAD_REQUEST);
