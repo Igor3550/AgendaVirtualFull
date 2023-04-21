@@ -2,17 +2,23 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import { useForm } from "../../../../hooks/useForm";
 import { DateSelect, InputArea, SelectArea } from "../../../../components/Form";
 import { WaitingComponent } from "../../../../components/Waiting/Waiting-component";
 import { createWaiting, getWaiting } from "../../../../services/api";
-import dayjs from "dayjs";
+import useStorage from "../../../../hooks/useStorage";
 
 const WaitingPage = () => {
   const [form, handleForm, resetForm] = useForm();
   const [addingLoading, setAddingLoading] = useState(false);
-  const { data, isLoading, refetch } = useQuery('get-waiting-list', getWaiting);
+  const { data, isLoading, refetch } = useQuery('get-waiting-list', handleGetWaiting);
+  const [ value ] = useStorage("userInfo", {});
+
+  async function handleGetWaiting() {
+    return await getWaiting(value.token);
+  }
 
   async function handleAddToWaiting() {
     if(!form.name) return alert('Preencha corretamente!');
@@ -25,7 +31,7 @@ const WaitingPage = () => {
     }
 
     try {
-      await createWaiting(body);
+      await createWaiting(value.token, body);
       resetForm({
         name: '',
         date: dayjs(),

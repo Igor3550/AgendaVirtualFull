@@ -20,7 +20,7 @@ export const SelectArea = ({ ...otherProps }) => {
 
   return (
     <Select {...otherProps}>
-      <option value='0' label='Service' />
+      <option value='0' label={ otherProps.label ? otherProps.label : 'Serviços'} />
       {isLoading ? 
       <></>
       : data ?
@@ -38,8 +38,8 @@ export const DateSelect = ({label, value, handleForm }) => {
     <Calendar>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          className='date-picker'
           label={label}
+          className='date-picker'
           inputFormat="DD/MM/YYYY"
           openTo="day"
           views={['day']}

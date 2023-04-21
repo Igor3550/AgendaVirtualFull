@@ -1,13 +1,34 @@
-import { useEffect } from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
+import useStorage from "../../../hooks/useStorage";
+import { SelectArea, DateSelect } from "../../../components/Form";
+import { AddServiceModal } from "../../../components/ConfigServiceComponents/AddServiceModal";
+ 
 const ConfigPage = ({view, setView}) => {
+
+  const [ value ] = useStorage('userInfo', {});
+  const [ addServModalView, setAddServModalView ] = useState(false);
+
   return (
     view ?
       <Container>
         <Background onClick={() => setView(false)}/>
         <ModalArea>
-          <Label>Olá, </Label>
+          {addServModalView ? <AddServiceModal setModalView={setAddServModalView} /> : <></>}
+          
+          <Title>Olá, {value.user.name}</Title>
+          <ConfigServicesArea>
+            <SelectArea label="Serviços" />
+            <ButtonsArea>
+              <Button type="create" onClick={() => setAddServModalView(true)} >+</Button>
+              <Button>-</Button>
+            </ButtonsArea>
+          </ConfigServicesArea>
+          <UnavailabilityArea>
+            <Label>Adicionar indisponibilidade</Label>
+            <DateSelect label="Adicionar indisponibilidade" />
+          </UnavailabilityArea>
         </ModalArea>
       </Container>
     : <></>
@@ -58,14 +79,64 @@ const ModalArea = styled.div`
   @media (max-width: 800px){
     width: 85%;
     font-size: 16px;
-    height: auto;
+    height: 90%;
     padding: 20px;
   }
 `;
 
-const Label = styled.div`
+const Title = styled.div`
   color: #fff;
   font-size: 18px;
   font-weight: 700;
   margin: 10px;
+`;
+
+const Label = styled.div`
+  color: #fff;
+  font-size: 12px;
+  margin: 5px;
+`;
+
+const ConfigServicesArea = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Button = styled.button`
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-radius: 10px;
+  color: #FF5CA1;
+  border: 1px solid #FF5CA1;
+  font-size: 20px;
+  margin: 10px;
+  background: #fff;
+  ${props => props.type === 'create' ? `
+    background: #FF5CA1;
+    color: #fff;
+  ` 
+  : ``};
+
+  :hover{
+    cursor: pointer;
+  }
+
+`;
+
+const UnavailabilityArea = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonsArea = styled.div`
+  display: flex;
+  height: 50px;
+  border-radius: 10px;
+  flex-direction: row;
+  background-color: #FFA3CF;
+  margin-left: 20px;
 `;

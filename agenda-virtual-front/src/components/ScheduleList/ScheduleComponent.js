@@ -10,6 +10,7 @@ import { useGetServices } from "../../hooks/Api/useServices";
 import { finishSchedule } from "../../services/api";
 import { Oval } from "react-loader-spinner";
 import { Confirmation } from "../Confirmation";
+import useStorage from "../../hooks/useStorage";
 
 export const ScheduleComponent = ({ schedule, refetch }) => {
   const [ deleteConfirmationView, setDeleteConfirmationView ] = useState(false);
@@ -17,6 +18,7 @@ export const ScheduleComponent = ({ schedule, refetch }) => {
   const [ editModal, setEditModal ] = useState(false);
   const [ loadingFinish, setLoadingFinish ] = useState(false);
   const [ scheduleService, setScheduleService ] = useState({});
+  const [ value ] = useStorage("userInfo", {});
 
   const { data } = useGetServices();
 
@@ -31,7 +33,7 @@ export const ScheduleComponent = ({ schedule, refetch }) => {
   async function handleFinishSchedule() {
     setLoadingFinish(true);
     try {
-      await finishSchedule(schedule.id);
+      await finishSchedule(value.token, schedule.id);
     } catch (error) {
       console.log(error);
       alert('Ouve um erro ao finalizar o agendamento!')

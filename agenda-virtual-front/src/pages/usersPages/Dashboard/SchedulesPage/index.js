@@ -3,9 +3,15 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { ScheduleListComponent } from "../../../../components/ScheduleList/ScheduleListComponent";
 import { getScheduleList } from "../../../../services/api";
+import useStorage from "../../../../hooks/useStorage";
 
 const SchedulesPage = () => {
-  const { data, isLoading, error, refetch } = useQuery('get-schedules', getScheduleList);
+  const [ value ] = useStorage("userInfo", {});
+  const { data, isLoading, error, refetch } = useQuery('get-schedules', handleGetScheduleList);
+
+  async function handleGetScheduleList() {
+    return await getScheduleList(value.token);
+  }
 
   if(error) return (
     <SchedulesContainer>
