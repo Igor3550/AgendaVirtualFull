@@ -16,6 +16,7 @@ scheduleRouter
   .use('/', adminVerifyToken)
   .get('/', scheduleController.sendScheduleList)
   .post('/', verifyScheduleInput, scheduleController.createSchedule)
+  .post('/unavailable', scheduleController.scheduleUnavailableDate)
   .put('/:id', verifyScheduleInput, scheduleController.updateSchedule)
   .delete('/:id', scheduleController.deleteSchedule)
   .put('/finish/:id', scheduleController.finishSchedule);

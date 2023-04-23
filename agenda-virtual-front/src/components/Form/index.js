@@ -121,7 +121,7 @@ const Input = styled.input`
 
 const Select = styled.select`
   width: 80%;
-  height: 60px;
+  height: 50px;
   background-color: #FFA3CF;
   font-size: 18px;
   color: #fff;

@@ -12,7 +12,7 @@ export const UpdateServiceModal = ({ setModalView, children, serviceId }) => {
 
   const [form, handleForm, resetForm] = useForm();
   const [ value, setValue ] = useStorage("userInfo", {});
-  const { data, isFetching, refetch, error } = useQuery('get-service', handleGetService, {onSuccess: ((data) => console.log(data))});
+  const { data, isFetching } = useQuery('get-service', handleGetService);
 
   async function handleGetService() {
     try {

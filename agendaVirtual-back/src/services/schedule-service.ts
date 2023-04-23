@@ -114,6 +114,16 @@ async function finishScheduleById(id: number) {
   return finishedSchedule;
 }
 
+async function scheduleUnavailableDate(userId: number, date: string) {
+  await verifyServiceAndDate(null, 5, date, 7);
+  const user = await userService.getUserById(userId);
+  if(!user) throw notFound();
+
+  const schedule = await scheduleRepository.insertSchedule(user.name, user.clientId, 5, date, 7);
+
+  return schedule;
+}
+
 const scheduleService = {
   getScheduleList,
   getScheduleByClientId,
@@ -123,7 +133,8 @@ const scheduleService = {
   updateClientSchedule,
   deleteScheduleById,
   deleteClientScheduleById,
-  finishScheduleById
+  finishScheduleById,
+  scheduleUnavailableDate
 }
 
 export default scheduleService;

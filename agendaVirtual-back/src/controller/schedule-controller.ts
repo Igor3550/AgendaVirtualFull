@@ -144,6 +144,25 @@ async function finishSchedule(req: Request, res: Response) {
   }
 }
 
+async function scheduleUnavailableDate(req: AuthenticatedRequest, res: Response) {
+  const userId = req.userId;
+  const { date } = req.body;
+
+  if(!date) return res.sendStatus(httpStatus.BAD_REQUEST);
+
+  const tratedDate = dayjs(date).toISOString();
+
+  try {
+    const schedule = await scheduleService.scheduleUnavailableDate(userId, tratedDate);
+    return res.send(schedule);
+  } catch (error) {
+    if(error.name === 'BadRequest') return res.sendStatus(httpStatus.BAD_REQUEST);
+    if(error.name === 'NotFound') return res.sendStatus(httpStatus.NOT_FOUND);
+    if(error.name === 'Conflict') return res.sendStatus(httpStatus.CONFLICT);
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+
 const scheduleController = {
   sendScheduleList,
   sendClientScheduleList,
@@ -153,7 +172,8 @@ const scheduleController = {
   updateClientSchedule,
   deleteSchedule,
   deleteClientSchedule,
-  finishSchedule
+  finishSchedule,
+  scheduleUnavailableDate
 }
 
 export default scheduleController;

@@ -61,7 +61,7 @@ const ConfigPage = ({view, setView}) => {
 
               <ButtonsArea>
                 <Button onClick={() => setAddServModalView(true)} >+</Button>
-                <Button onClick={handleConfigService} >-</Button>
+                <Button onClick={() => handleConfigService("delete")} >-</Button>
                 <Button onClick={() => handleConfigService("update")} >
                   <AiFillEdit />
                 </Button>
@@ -114,7 +114,7 @@ const ModalArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding: 10px 100px;
 
   p{
     color: #fff;
@@ -124,7 +124,7 @@ const ModalArea = styled.div`
     width: 85%;
     font-size: 16px;
     height: 90%;
-    padding: 20px;
+    padding: 10px 30px;
   }
 `;
 
@@ -178,6 +178,7 @@ const Button = styled.button`
 
 const UnavailabilityArea = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 `;
 

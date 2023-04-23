@@ -4,23 +4,23 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-  let service_test = await prisma.service.findFirst({
+  let UnavailableDate = await prisma.service.findFirst({
     where: {
-      name: "service_test"
+      name: "UnavailableDate"
     }
   })
 
-  if (!service_test) {
-    service_test = await prisma.service.create({
+  if (!UnavailableDate) {
+    UnavailableDate = await prisma.service.create({
       data: {
-        name: "service_test",
-        duration: 2,
-        price: 100
+        name: "UnavailableDate",
+        duration: 8,
+        price: 1
       },
     });
   }
 
-  console.log({ service_test });
+  console.log({ UnavailableDate });
 }
 
 main()
