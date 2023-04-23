@@ -1,30 +1,22 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+
 import { useForm } from "../../hooks/useForm";
 import { InputArea } from "../Form";
-import { createService } from "../../services/api";
+import { updateService, getServiceById } from "../../services/api";
 import useStorage from "../../hooks/useStorage";
-import { useNavigate } from "react-router-dom";
 
-export const AddServiceModal = ({ setModalView, children }) => {
+export const UpdateServiceModal = ({ setModalView, children, serviceId }) => {
   const navigate = useNavigate();
 
   const [form, handleForm, resetForm] = useForm();
   const [ value, setValue ] = useStorage("userInfo", {});
+  const { data, isFetching, refetch, error } = useQuery('get-service', handleGetService, {onSuccess: ((data) => console.log(data))});
 
-  async function handleCreateService(e) {
-    e.preventDefault();
-
-    const body = {
-      name: form.name,
-      duration: Number(form.duration),
-      price: Number(form.price)
-    }
-
+  async function handleGetService() {
     try {
-      await createService(value.token, body);
-      resetForm();
-      setModalView(false);
-      alert("Serviço criado!");
+      return await getServiceById(value.token, serviceId);
     } catch (error) {
       if(error.reponse.status === 400) alert("Por favor verifique os campos!");
       if(error.reponse.status === 401) {
@@ -36,35 +28,83 @@ export const AddServiceModal = ({ setModalView, children }) => {
     }
   }
 
+  async function handleUpdateService(e) {
+    e.preventDefault();
+
+    let altered = false;
+
+    const body = {
+      name: form.name,
+      duration: Number(form.duration),
+      price: Number(form.price)
+    }
+
+    if(!form.name){
+      body.name = data.data.name;
+    }else{
+      altered = true;
+    }
+
+    if(!form.duration){
+      body.duration = data.data.duration;
+    }else{
+      altered = true;
+    }
+
+    if(!form.price){
+      body.price = data.data.price;
+    }else{
+      altered = true;
+    }
+
+    if(altered) {
+      try {
+        await updateService(value.token, body, Number(serviceId));
+        resetForm();
+        setModalView(false);
+        alert("Serviço Alterado!");
+      } catch (error) {
+        if(error.reponse.status === 400) alert("Por favor verifique os campos!");
+        if(error.reponse.status === 401) {
+          alert("Usuario sem autorização!");
+          setValue({});
+          navigate("/");
+        }
+        alert("Ouve um erro!");
+      }
+    }
+
+    
+  }
+
   return (
     <Container>
       <Background onClick={() => setModalView(false)} />
+      {isFetching ? <>...</> :
+      
       <ModalArea>
-        <Title>Adicionar novo serviço</Title>
-        <form onSubmit={handleCreateService}>
+        <Title>Alterar serviço</Title>
+        <form onSubmit={handleUpdateService}>
           <InputArea
-            placeholder="Nome do serviço"
+            placeholder={data.data.name}
             name="name"
             type="name"
             value={form.name}
             onChange={handleForm}
-            required
           />
           <InputArea
-            placeholder="Duração em horas (somente numeros)"
+            placeholder={`Duration: ${data.data.duration}h`}
             name="duration"
             type="number"
             value={form.duration}
             onChange={handleForm}
-            required
           />
           <InputArea
-            placeholder="Valor (somente numeros)"
+            placeholder={`Valor: R$${data.data.price},00`}
             name="price"
             type="number"
             value={form.price}
             onChange={handleForm}
-            required
           />
           <ButtonArea>
             <Button>Salvar</Button>
@@ -73,6 +113,7 @@ export const AddServiceModal = ({ setModalView, children }) => {
         </form>
         {children}
       </ModalArea>
+      }
     </Container>
   )
 }

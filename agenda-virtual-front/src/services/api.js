@@ -107,6 +107,13 @@ export async function updateUserInfo(token, body) {
   return res;
 }
 
+export async function getServiceById(token, id) {
+  const header = createHeaders(token);
+  const res = await axios.get(`${baseURL}/services/${id}`, header);
+
+  return res;
+}
+
 export async function createService(token, body) {
   const header = createHeaders(token);
   const res = await axios.post(`${baseURL}/services`, body, header);

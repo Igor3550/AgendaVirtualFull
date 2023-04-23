@@ -13,6 +13,7 @@ model Service {
   name      String
   price     Int 
   duration  Int
+  active    Boolean     @default(true)
   createdAt DateTime    @default(now())
   Schedule  Schedule[]
   Waiting   Waiting[]

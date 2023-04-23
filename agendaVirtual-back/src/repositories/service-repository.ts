@@ -11,13 +11,18 @@ async function insertService(name: string, duration: number, price: number) {
 };
 
 async function listServices() {
-  return await prisma.service.findMany({})
+  return await prisma.service.findMany({
+    where:{
+      active: true
+    }
+  })
 };
 
 async function findById(id: number) {
   return await prisma.service.findFirst({
     where: {
-      id
+      id,
+      active: true
     }
   })
 };
@@ -36,9 +41,12 @@ async function updateService(id: number, name: string, duration: number, price: 
 };
 
 async function deleteService(id: number) {
-  return await prisma.service.delete({
+  return await prisma.service.update({
     where: {
       id
+    },
+    data:{
+      active: false
     }
   })
 };

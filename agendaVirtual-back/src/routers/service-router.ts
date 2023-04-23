@@ -8,6 +8,7 @@ const serviceRouter = Router();
 serviceRouter
   .get('/', serviceController.getServicesList)
   .use('/', adminVerifyToken)
+  .get('/:id', serviceController.getServiceById)
   .post('/', verifyServiceInput, serviceController.createService)
   .put('/:id', verifyServiceInput, serviceController.updateService)
   .delete('/:id', serviceController.deleteService);

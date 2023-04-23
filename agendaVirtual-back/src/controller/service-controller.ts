@@ -14,6 +14,18 @@ async function getServicesList(req: Request, res: Response) {
   }
 }
 
+async function getServiceById(req: Request, res: Response) {
+  const serviceId = req.params.id;
+  try {
+    const serviceList = await serviceService.findServiceById(Number(serviceId));
+    return res.send(serviceList);
+  } catch (error) {
+    if(error.name === 'BadRequest') return res.sendStatus(httpStatus.BAD_REQUEST);
+    if(error.name === 'NotFound') return res.sendStatus(httpStatus.NOT_FOUND);
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+
 async function createService(req: Request, res: Response) {
   const { name, duration, price } = req.body;
 
@@ -50,6 +62,7 @@ async function deleteService(req: Request, res: Response) {
     const deletedService = await serviceService.deleteService(Number(serviceId));
     return res.send(deletedService);
   } catch (error) {
+    console.log(error);
     if(error.name === 'BadRequest') return res.sendStatus(httpStatus.BAD_REQUEST);
     if(error.name === 'NotFound') return res.sendStatus(httpStatus.NOT_FOUND);
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
@@ -58,6 +71,7 @@ async function deleteService(req: Request, res: Response) {
 
 const serviceController = {
   getServicesList,
+  getServiceById,
   createService,
   updateService,
   deleteService

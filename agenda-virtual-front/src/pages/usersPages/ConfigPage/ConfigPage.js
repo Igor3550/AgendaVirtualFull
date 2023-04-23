@@ -1,14 +1,49 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { IconContext } from "react-icons";
+import { AiFillEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 import useStorage from "../../../hooks/useStorage";
 import { SelectArea, DateSelect } from "../../../components/Form";
 import { AddServiceModal } from "../../../components/ConfigServiceComponents/AddServiceModal";
+import { Confirmation } from "../../../components/Confirmation";
+import { deleteService } from "../../../services/api";
+import { UpdateServiceModal } from "../../../components/ConfigServiceComponents/UpdateServiceModal";
  
 const ConfigPage = ({view, setView}) => {
+  const navigate = useNavigate();
 
-  const [ value ] = useStorage('userInfo', {});
+  const [ value, setValue ] = useStorage('userInfo', {});
   const [ addServModalView, setAddServModalView ] = useState(false);
+  const [ updateServModalView, setUpdateServModalView ] = useState(false);
+  const [ deleteServModalView, setDeleteServModalView ] = useState(false);
+  const [ selectedService, setSelectedService ] = useState(0);
+
+  async function deleteServiceById() {
+    try {
+      await deleteService(value.token, Number(selectedService));
+      alert("Deletado com sucesso!");
+      setDeleteServModalView(false);
+    } catch (error) {
+      if(error.reponse.status === 401) {
+        alert("Usuario sem autorização!");
+        setValue({});
+        navigate("/");
+      }
+      alert("Ouve um erro!");
+    }
+  }
+
+  function handleConfigService(config="delete") {
+    if(!selectedService || Number(selectedService) === 0) {
+      alert("Por favor selecione um serviço!");
+    } else if(config === "delete"){
+      setDeleteServModalView(true);
+    }else if(config === "update"){
+      setUpdateServModalView(true);
+    }
+  }
 
   return (
     view ?
@@ -16,14 +51,23 @@ const ConfigPage = ({view, setView}) => {
         <Background onClick={() => setView(false)}/>
         <ModalArea>
           {addServModalView ? <AddServiceModal setModalView={setAddServModalView} /> : <></>}
+          {updateServModalView ? <UpdateServiceModal setModalView={setUpdateServModalView} serviceId={selectedService} /> : <></>}
+          {deleteServModalView ? <Confirmation setConfirmationView={setDeleteServModalView} confirmationFunction={deleteServiceById}>Deseja deletar esse serviço?</Confirmation> : <></>}
           
           <Title>Olá, {value.user.name}</Title>
           <ConfigServicesArea>
-            <SelectArea label="Serviços" />
-            <ButtonsArea>
-              <Button type="create" onClick={() => setAddServModalView(true)} >+</Button>
-              <Button>-</Button>
-            </ButtonsArea>
+            <SelectArea label="Serviços" onChange={e => setSelectedService(e.target.value)} value={selectedService} />
+            <IconContext.Provider value={{className:'icons'}}>
+
+              <ButtonsArea>
+                <Button onClick={() => setAddServModalView(true)} >+</Button>
+                <Button onClick={handleConfigService} >-</Button>
+                <Button onClick={() => handleConfigService("update")} >
+                  <AiFillEdit />
+                </Button>
+              </ButtonsArea>
+          
+            </IconContext.Provider>
           </ConfigServicesArea>
           <UnavailabilityArea>
             <Label>Adicionar indisponibilidade</Label>
@@ -103,6 +147,11 @@ const ConfigServicesArea = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  .icons {
+		color: #FF5CA1;
+		font-size: 17px;
+  }
 `;
 
 const Button = styled.button`
