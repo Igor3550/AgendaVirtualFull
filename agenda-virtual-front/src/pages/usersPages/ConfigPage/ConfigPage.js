@@ -12,6 +12,7 @@ import { Confirmation } from "../../../components/Confirmation";
 import { deleteService, scheduleUnavailableDate } from "../../../services/api";
 import { UpdateServiceModal } from "../../../components/ConfigServiceComponents/UpdateServiceModal";
 import { useForm } from "../../../hooks/useForm";
+import WalletComponent from "../../../components/WalletComponent";
  
 const ConfigPage = ({view, setView}) => {
   const navigate = useNavigate();
@@ -101,6 +102,7 @@ const ConfigPage = ({view, setView}) => {
             <DateSelect name="date" label="Adicionar indisponibilidade" handleForm={handleForm} value={form.date} />
             <UnavailableButton onClick={() => setUnavailableConfirmationView(true)} >Adicionar indisponibilidade</UnavailableButton>
           </UnavailabilityArea>
+          <WalletComponent />
         </ModalArea>
       </Container>
     : <></>
@@ -137,7 +139,7 @@ const ModalArea = styled.div`
   z-index: 1;
   background-color: #FF5CA1;
   width: 650px;
-  height: 600px;
+  height: 90%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
