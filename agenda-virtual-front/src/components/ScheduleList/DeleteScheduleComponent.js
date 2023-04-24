@@ -1,13 +1,16 @@
+import useStorage from "../../hooks/useStorage";
 import { deleteSchedule } from "../../services/api";
 import { Confirmation } from "../Confirmation";
 
 export const DeleteScheduleComponent = ({ scheduleId, confirmationView, setConfirmationView }) => {
 
+  const [ value ] = useStorage("userInfo", {});
+
   async function handleDelete() {
     setConfirmationView(false);
 
     try {
-      const response = await deleteSchedule(scheduleId);
+      const response = await deleteSchedule(value.token, scheduleId);
       console.log(response.data);
       alert("Angendamento Deletado!");
       setConfirmationView(false);

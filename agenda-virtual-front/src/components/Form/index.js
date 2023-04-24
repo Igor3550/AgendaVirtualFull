@@ -69,8 +69,8 @@ export const HoursSelect = ({ name, dayHours, title, selectedHour, handleForm, e
   }
 
   React.useEffect(() => {
-    if(!editException) return console.log(editException);
-    if(!service) return console.log('');
+    if(!editException) return;
+    if(!service) return;
     let hoursExcept = {};
 
     for(let i=0; i<service.duration; i++){

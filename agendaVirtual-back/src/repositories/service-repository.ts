@@ -21,8 +21,7 @@ async function listServices() {
 async function findById(id: number) {
   return await prisma.service.findFirst({
     where: {
-      id,
-      active: true
+      id
     }
   })
 };

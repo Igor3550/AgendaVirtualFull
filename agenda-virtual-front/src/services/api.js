@@ -64,6 +64,13 @@ export async function finishSchedule(token, id) {
   return res;
 }
 
+export async function scheduleUnavailableDate(token, date) {
+  const header = createHeaders(token);
+  const res = await axios.post(`${baseURL}/schedule/unavailable`, {date: date}, header);
+
+  return res;
+}
+
 export async function getDayHours(date) {
   const res = await axios.get(`${baseURL}/date/hours/${date}`);
   return res.data;

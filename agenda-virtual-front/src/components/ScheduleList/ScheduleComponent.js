@@ -52,31 +52,35 @@ export const ScheduleComponent = ({ schedule, refetch }) => {
           <ClientInfo>
             <p><strong>Cliente:</strong> {schedule.clientName}</p>
             <p><strong>Horário:</strong> {schedule.hour}h</p>
-            <p><strong>Serviço:</strong> {scheduleService ? scheduleService.name : ''}</p>
+            <p><strong>Serviço:</strong> {Number(schedule.service_id) === 5 ? "Indisponibilidade" : (scheduleService ? scheduleService.name : '')}</p>
             <p><strong>Data:</strong> {dayjs(schedule.date).format('DD/MM')}</p>
           </ClientInfo>
           <SideButtonsArea>
-            <SideButton onClick={() => setEditModal(!editModal)} ><HiOutlinePencil /></SideButton>
+            {Number(schedule.service_id) === 5 ? <></> : 
+              <SideButton onClick={() => setEditModal(!editModal)} ><HiOutlinePencil /></SideButton>
+            }
             <SideButton onClick={() => setDeleteConfirmationView(true)} >
               <BsTrash />
             </SideButton>
             <DeleteScheduleComponent scheduleId={schedule.id} confirmationView={deleteConfirmationView} setConfirmationView={setDeleteConfirmationView} />
           </SideButtonsArea>
         </TopContext>
-        <EndButton onClick={() => setConfirmationView(true)} >
-          {loadingFinish ?
-            <Oval
-            height={20}
-            width={20}
-            color="#fff"
-            visible={true}
-            ariaLabel='oval-loading'
-            secondaryColor="#FFA3CF"
-            />
-            :
-            <>Finalizar</>
-          }
-        </EndButton>
+        {Number(schedule.service_id) === 5 ? <></> : 
+          <EndButton onClick={() => setConfirmationView(true)} >
+            {loadingFinish ?
+              <Oval
+              height={20}
+              width={20}
+              color="#fff"
+              visible={true}
+              ariaLabel='oval-loading'
+              secondaryColor="#FFA3CF"
+              />
+              :
+              <>Finalizar</>
+            }
+          </EndButton>
+        }
         {confirmationView ? <Confirmation setConfirmationView={setConfirmationView} confirmationFunction={handleFinishSchedule} >Deseja finalizar esse agendamento?</Confirmation> : <></> }
 
       </IconContext.Provider>

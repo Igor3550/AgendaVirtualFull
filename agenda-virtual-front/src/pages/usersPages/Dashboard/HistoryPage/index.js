@@ -40,7 +40,7 @@ const HistoryPage = () => {
         />
       :
         data ?
-          data.map(schedule => <HistoryComponent schedule={schedule} />)
+          data.map(schedule => <HistoryComponent key={schedule.id} schedule={schedule} />)
         : <></>
       }
     </Container>

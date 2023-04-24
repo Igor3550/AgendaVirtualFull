@@ -7,6 +7,7 @@ import { Oval } from "react-loader-spinner";
 import { getDayHours, updateSchedule } from "../../services/api";
 import { SelectArea, DateSelect, HoursSelect } from "../Form";
 import { useForm } from "../../hooks/useForm";
+import useStorage from "../../hooks/useStorage";
 
 export const EditScheduleModal = ({ setVisible, schedule, service }) => {
 
@@ -18,6 +19,7 @@ export const EditScheduleModal = ({ setVisible, schedule, service }) => {
   });
   const [ dayHours, setDayHours ] = useState();
   const [ btnScheduleLoading, setBtnScheduleLoading ] = useState(false);
+  const [ value ] = useStorage("userInfo", {});
 
   const { isFetching, refetch } = useQuery('get-day-hours-edit', 
     async () => await getDayHours(dayjs(form.date).format('YYYY-MM-DD')), 
@@ -49,7 +51,7 @@ export const EditScheduleModal = ({ setVisible, schedule, service }) => {
         service_id: Number(form.service)
       }
 
-      const response = await updateSchedule(body, schedule.id);
+      const response = await updateSchedule(value.token, body, schedule.id);
       console.log(response.data);
       alert("Angendamento Alterado!");
       resetForm({

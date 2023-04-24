@@ -86,7 +86,7 @@ const WaitingPage = () => {
         /> 
       : 
         data ?
-          data.map(client => <WaitingComponent client={client} refetch={refetch} />)
+          data.map(client => <WaitingComponent key={client.id} client={client} refetch={refetch} />)
         : <></>
       }
     </Container>

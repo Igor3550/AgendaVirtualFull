@@ -104,6 +104,19 @@ async function deleteScheduleById(id: number) {
   });
 }
 
+async function insertUnavailableSchedule(name: string, clientId: number, service_id: number, date: string, hour: number) {
+  return prisma.schedule.create({
+    data: {
+      clientName: name,
+      clientId,
+      date,
+      hour,
+      service_id,
+      finished: true
+    }
+  });
+}
+
 const scheduleRepository = {
   getScheduleById,
   getOpenClientSchedule,
@@ -112,6 +125,7 @@ const scheduleRepository = {
   listScheduleByClient,
   verifyClientSchedule,
   insertSchedule,
+  insertUnavailableSchedule,
   updateSchedule,
   deleteScheduleById,
   finishSchedule

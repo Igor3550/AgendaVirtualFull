@@ -33,7 +33,7 @@ export const ScheduleListComponent = ({ schedules, refetch }) => {
         <Label>Agendamento para hoje</Label>
 
         {orderedSchedules.todaySchedules ?
-          orderedSchedules.todaySchedules.map(schedule => <ScheduleComponent schedule={schedule} refetch={refetch} />)
+          orderedSchedules.todaySchedules.map(schedule => <ScheduleComponent key={schedule.id} schedule={schedule} refetch={refetch} />)
         :<></>
         }
 
@@ -42,7 +42,7 @@ export const ScheduleListComponent = ({ schedules, refetch }) => {
         <Label>Próximo Agendamento</Label>
 
         {orderedSchedules.normalSchedules ?
-          orderedSchedules.normalSchedules.map(schedule => <ScheduleComponent schedule={schedule} refetch={refetch} />)
+          orderedSchedules.normalSchedules.map(schedule => <ScheduleComponent key={schedule.id} schedule={schedule} refetch={refetch} />)
         :<></>
         }
         
