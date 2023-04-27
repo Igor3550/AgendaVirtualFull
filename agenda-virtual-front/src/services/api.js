@@ -141,3 +141,31 @@ export async function deleteService(token, id) {
 
   return res;
 }
+
+export async function getAllTransaction(token) {
+  const header = createHeaders(token);
+  const res = await axios.get(`${baseURL}/transaction`, header);
+
+  return res;
+}
+
+export async function createTransaction(token, body) {
+  const header = createHeaders(token);
+  const res = await axios.post(`${baseURL}/transaction`, body, header);
+
+  return res;
+}
+
+export async function updateTransaction(token, body, id) {
+  const header = createHeaders(token);
+  const res = await axios.put(`${baseURL}/transaction/${id}`, body, header);
+
+  return res;
+}
+
+export async function deleteTransaction(token, id) {
+  const header = createHeaders(token);
+  const res = await axios.delete(`${baseURL}/transaction/${id}`, header);
+
+  return res;
+}

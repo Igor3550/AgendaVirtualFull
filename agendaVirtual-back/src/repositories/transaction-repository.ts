@@ -13,23 +13,25 @@ async function getTransactionById(id: number) {
   });
 }
 
-async function createTransaction(type: TransactionType, value: number) {
+async function createTransaction(type: TransactionType, value: number, description: string) {
   return await prisma.transaction.create({
     data:{
       type,
-      value
+      value,
+      description
     }
   });
 }
 
-async function updateTransaction(id: number, type: TransactionType, value: number) {
+async function updateTransaction(id: number, type: TransactionType, value: number, description: string) {
   return await prisma.transaction.update({
     where:{
       id
     },
     data:{
       type,
-      value
+      value,
+      description
     }
   });
 }

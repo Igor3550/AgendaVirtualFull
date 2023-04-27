@@ -112,7 +112,8 @@ enum TransactionType {
 model Transaction {
   id          Int               @id   @default(autoincrement())
   type        TransactionType   
-  value       Int               
+  value       Int         
+  description String      
   createdAt   DateTime          @default(now())
 
   @@map("transactions")

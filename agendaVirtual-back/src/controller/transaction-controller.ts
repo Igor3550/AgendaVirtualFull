@@ -18,10 +18,10 @@ async function getAllTransactions(req: AuthenticatedRequest, res: Response) {
 }
 
 async function createTransaction(req: Request, res: Response) {
-  const { type, value } = req.body;
+  const { type, value, description } = req.body;
 
   try {
-    const transactions = await transactionService.createTransaction(type, Number(value));
+    const transactions = await transactionService.createTransaction(type, Number(value), description);
     return res.send(transactions);
   } catch (error) {
     if(error.name === "NotFound") return res.sendStatus(httpStatus.NOT_FOUND);
@@ -33,11 +33,11 @@ async function createTransaction(req: Request, res: Response) {
 }
 
 async function updateTransaction(req: AuthenticatedRequest, res: Response) {
-  const { type, value } = req.body;
+  const { type, value, description } = req.body;
   const id = req.params.id;
 
   try {
-    const transactions = await transactionService.updateTransaction(Number(id), type, Number(value));
+    const transactions = await transactionService.updateTransaction(Number(id), type, Number(value), description);
     return res.send(transactions);
   } catch (error) {
     if(error.name === "NotFound") return res.sendStatus(httpStatus.NOT_FOUND);

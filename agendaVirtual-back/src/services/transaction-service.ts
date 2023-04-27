@@ -16,18 +16,18 @@ async function getTransactions() {
   return await transactionRepository.getAllTransactions();
 }
 
-async function createTransaction(type: string, value: number) {
+async function createTransaction(type: string, value: number, description: string) {
   const transactionType = verifyTransactionTypeInput(type);
   if(!transactionType) throw badRequest();
-  return await transactionRepository.createTransaction(transactionType, value);
+  return await transactionRepository.createTransaction(transactionType, value, description);
 }
 
-async function updateTransaction(id:number, type: string, value: number) {
+async function updateTransaction(id:number, type: string, value: number, description: string) {
   const transaction = await transactionRepository.getTransactionById(id);
   if(!transaction) throw notFound();
   const transactionType = verifyTransactionTypeInput(type);
   if(!transactionType) throw badRequest();
-  return await transactionRepository.updateTransaction(id, transactionType, value);
+  return await transactionRepository.updateTransaction(id, transactionType, value, description);
 }
 
 async function deleteTransaction(id:number) {

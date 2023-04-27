@@ -12,7 +12,7 @@ import { Confirmation } from "../../../components/Confirmation";
 import { deleteService, scheduleUnavailableDate } from "../../../services/api";
 import { UpdateServiceModal } from "../../../components/ConfigServiceComponents/UpdateServiceModal";
 import { useForm } from "../../../hooks/useForm";
-import WalletComponent from "../../../components/WalletComponent";
+import WalletComponent from "../../../components/WalletConponents/WalletComponent";
  
 const ConfigPage = ({view, setView}) => {
   const navigate = useNavigate();
