@@ -115,7 +115,7 @@ async function finishScheduleById(id: number) {
 }
 
 async function scheduleUnavailableDate(userId: number, date: string) {
-  await verifyServiceAndDate(null, 5, date, 7);
+  await verifyServiceAndDate(null, 1, date, 7);
   const user = await userService.getUserById(userId);
   if(!user) throw notFound();
 
