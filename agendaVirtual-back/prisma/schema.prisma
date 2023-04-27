@@ -103,3 +103,17 @@ model Client {
 
   @@map("clients")
 }
+
+enum TransactionType {
+  ENTRY
+  WITHDRAW
+}
+
+model Transaction {
+  id          Int               @id   @default(autoincrement())
+  type        TransactionType   
+  value       Int               
+  createdAt   DateTime          @default(now())
+
+  @@map("transactions")
+}
