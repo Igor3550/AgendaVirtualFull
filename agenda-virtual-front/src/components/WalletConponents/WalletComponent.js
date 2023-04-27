@@ -3,6 +3,7 @@ import WalletItem from "./WalletItem";
 import { getAllTransaction } from "../../services/api";
 import { useQuery } from "react-query";
 import useStorage from "../../hooks/useStorage";
+import { useEffect } from "react";
 
 const WalletComponent = () => {
 
@@ -13,13 +14,21 @@ const WalletComponent = () => {
     return await getAllTransaction(value.token);
   }
 
+  useEffect(() => {
+    refetch();
+  }, [])
+
   return (
-    <Container>
-      {data ?
-        data.data.map(transaction => <WalletItem key={transaction.id} transaction={transaction} />)
-      : <></>}
-      
-    </Container>
+    <>
+      <Label>Movimentações</Label>
+      <Container>
+        {data ?
+          data.data.map(transaction => <WalletItem key={transaction.id} transaction={transaction} />)
+        : <></>}
+        
+      </Container>
+    
+    </>
   )
 }
 
@@ -31,4 +40,10 @@ const Container = styled.div`
   border-radius: 10px;
   background-color: #fff;
   padding: 15px 5px;
+`;
+
+const Label = styled.div`
+  color: #fff;
+  font-size: 16px;
+  margin: 5px;
 `;

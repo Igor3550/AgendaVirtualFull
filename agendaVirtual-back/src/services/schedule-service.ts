@@ -4,6 +4,8 @@ import { notFound, badRequest, conflict } from '../errors/errors';
 import { verifyDate } from '../utils/verify-date';
 import clientService from './client-service';
 import userService from './user-service';
+import transactionService from './transaction-service';
+import serviceService from './services-service';
 
 async function verifyServiceAndDate(schedule_id: number, service_id: number, date: string, hour: number) {
   const service = await serviceRepository.findById(service_id);
@@ -109,6 +111,9 @@ async function finishScheduleById(id: number) {
   const schedule = await scheduleRepository.getScheduleById(id);
   if(!schedule) throw notFound();
   if(schedule.finished) throw badRequest();
+  
+  const service = await serviceService.findServiceById(schedule.service_id);
+  await transactionService.createTransaction("ENTRY", service.price, service.name);
 
   const finishedSchedule = await scheduleRepository.finishSchedule(id);
   return finishedSchedule;

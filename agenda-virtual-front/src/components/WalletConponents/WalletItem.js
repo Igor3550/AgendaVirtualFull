@@ -3,7 +3,8 @@ import styled from "styled-components";
 const WalletItem = ({ transaction }) => {
   return (
     <Label type={transaction.type}>
-      transaction
+      <p>{transaction.description}</p>
+      <p>R$ {transaction.value},00</p>
     </Label>
   )
 }
@@ -16,6 +17,13 @@ const colors = {
 }
 
 const Label = styled.div`
-  color: ${props => props.type === "ENTRY" ? colors.green : colors.red};
   margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+
+  p{
+    color: ${props => props.type === "ENTRY" ? colors.green : colors.red};
+    font-size: 16px;
+  }
 `;
