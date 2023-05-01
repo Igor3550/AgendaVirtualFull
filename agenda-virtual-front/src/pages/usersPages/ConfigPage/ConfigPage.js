@@ -102,7 +102,7 @@ const ConfigPage = ({view, setView}) => {
             <DateSelect name="date" label="Adicionar indisponibilidade" handleForm={handleForm} value={form.date} />
             <UnavailableButton onClick={() => setUnavailableConfirmationView(true)} >Adicionar indisponibilidade</UnavailableButton>
           </UnavailabilityArea>
-          <WalletComponent />
+          <WalletComponent refetchController={view} />
         </ModalArea>
       </Container>
     : <></>

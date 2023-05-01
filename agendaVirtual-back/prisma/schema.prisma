@@ -59,6 +59,7 @@ model User {
   Session       Session[]
   UserSchedules UserSchedules[]
   UserAdmin     UserAdmin[]
+  InvalidDate   InvalidDate[]
   Client        Client         @relation(fields: [clientId], references: [id])
 
   @@map("users")
@@ -117,4 +118,15 @@ model Transaction {
   createdAt   DateTime          @default(now())
 
   @@map("transactions")
+}
+
+model InvalidDate {
+  id            Int               @id   @default(autoincrement())
+  date          DateTime         
+  description   String
+  userId        Int
+  createdAt     DateTime          @default(now())
+  User          User             @relation(fields: [userId], references: [id])
+
+  @@map("invalidDates")
 }
