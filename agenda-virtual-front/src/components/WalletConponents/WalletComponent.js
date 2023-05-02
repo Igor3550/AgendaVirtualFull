@@ -13,7 +13,7 @@ const WalletComponent = ({ refetchController }) => {
   const [ totalWallet, setTotalWallet ] = useState(0);
   const [ createTransactionView, setCreateTransactionView ] = useState(false);
   const [ createWithDrawTransactionView, setCreateWithDrawTransactionView ] = useState(false);
-  const { data, isLoading, error, refetch } = useQuery('get-transactions', handleGetTransactions);
+  const { data, refetch } = useQuery('get-transactions', handleGetTransactions);
 
   async function handleGetTransactions() {
     const response = await getAllTransaction(value.token);
