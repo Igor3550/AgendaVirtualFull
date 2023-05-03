@@ -31,7 +31,7 @@ async function createInvalidDate(userId: number, date: string, description: stri
 }
 
 async function deletetInvalidDate(id: number) {
-  return await prisma.transaction.delete({
+  return await prisma.invalidDate.delete({
     where:{
       id
     }

@@ -33,6 +33,12 @@ async function getScheduleByClientId(clientId: number) {
   return scheduleList;
 }
 
+async function getScheduleByDate(date: string) {
+  const scheduleList = await scheduleRepository.listScheduleByDate(date);
+
+  return scheduleList;
+}
+
 async function insertSchedule(name: string, service_id: number, date: string, hour: number) {
   await verifyServiceAndDate(null, service_id, date, hour);
 
@@ -132,6 +138,7 @@ async function scheduleUnavailableDate(userId: number, date: string) {
 const scheduleService = {
   getScheduleList,
   getScheduleByClientId,
+  getScheduleByDate,
   insertSchedule,
   insertClientSchedule,
   updateSchedule,

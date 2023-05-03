@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import scheduleRepository from "../repositories/schedule-repository";
 import { Service } from "@prisma/client";
-import { getDaysHoursHash } from "./hashtable-days-hour";
+import { getDaysHoursFalseHash, getDaysHoursHash } from "./hashtable-days-hour";
 import invalidDateService from "../services/invalidDate-service";
 
 async function verifyDate(schedule_id: number, date: string, hour: number, service: Service) {
   const today = dayjs().format('YYYY-MM-DD')
   const dayHoursHash = getDaysHoursHash();
+  const dayHoursFalseHash = getDaysHoursFalseHash();
   const scheduleDayList = await scheduleRepository.listScheduleByDate(date);
   const durationHourList = [];
   const isAfterTodayVerify = dayjs(date).isBefore(dayjs());
@@ -16,8 +17,13 @@ async function verifyDate(schedule_id: number, date: string, hour: number, servi
     hourIsAvailable: false
   }
 
-  const invalidDate = await invalidDateService.getInvalidByDate(date);
-  if(invalidDate) return availableHours;
+  const tratedDate = dayjs(date).toISOString();
+  const invalidDate = await invalidDateService.getInvalidByDate(tratedDate);
+  if(invalidDate){
+    availableHours.dayHoursHash = dayHoursFalseHash;
+    availableHours.hourIsAvailable = true;
+    return availableHours;
+  }
 
   if(isAfterTodayVerify && !isSameTodayVerify) return availableHours;
 

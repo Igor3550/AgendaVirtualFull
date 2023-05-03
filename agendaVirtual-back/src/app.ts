@@ -7,6 +7,7 @@ import {
   auhtRouter,
   dateRouter,
   historyRouter,
+  invalidDateRouter,
   scheduleRouter,
   serviceRouter,
   transactionRouter,
@@ -29,6 +30,7 @@ app
   .use('/user', userRouter)
   .use('/auth', auhtRouter)
   .use('/verify', verifyRouter)
+  .use('/invalidDate', invalidDateRouter)
   .use('/transaction', transactionRouter);
 
 export function init(): Promise<Express> {
