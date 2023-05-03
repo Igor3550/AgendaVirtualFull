@@ -64,7 +64,7 @@ export default WalletComponent;
 
 const Container = styled.div`
   width: 100%;
-  height: 250px;
+  min-height: 250px;
   border-radius: 10px 10px 0 0;
   background-color: #fff;
   padding: 15px 5px;

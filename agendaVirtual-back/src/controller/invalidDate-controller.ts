@@ -21,7 +21,7 @@ async function getInvalidDates(req: AuthenticatedRequest, res: Response) {
 
 async function getInvalidDatesByDate(req: AuthenticatedRequest, res: Response) {
 
-  const { date } = req.body;
+  const date = req.params.date;
 
   if(!date) return res.sendStatus(httpStatus.BAD_REQUEST);
 

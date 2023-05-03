@@ -8,7 +8,7 @@ const invalidDateRouter = Router();
 invalidDateRouter
   .use('/', adminVerifyToken)
   .get('/', invalidDateController.getInvalidDates)
-  .get('/date', invalidDateController.getInvalidDatesByDate)
+  .get('/:date', invalidDateController.getInvalidDatesByDate)
   .post('/', invalidDateController.createInvalidDate)
   .delete('/:id', invalidDateController.deleteInvalidDate);
 

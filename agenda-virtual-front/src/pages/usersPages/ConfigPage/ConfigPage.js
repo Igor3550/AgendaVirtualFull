@@ -9,10 +9,11 @@ import useStorage from "../../../hooks/useStorage";
 import { SelectArea, DateSelect } from "../../../components/Form";
 import { AddServiceModal } from "../../../components/ConfigServiceComponents/AddServiceModal";
 import { Confirmation } from "../../../components/Confirmation";
-import { deleteService, scheduleUnavailableDate } from "../../../services/api";
+import { createInvalidDate, deleteService, scheduleUnavailableDate } from "../../../services/api";
 import { UpdateServiceModal } from "../../../components/ConfigServiceComponents/UpdateServiceModal";
 import { useForm } from "../../../hooks/useForm";
 import WalletComponent from "../../../components/WalletConponents/WalletComponent";
+import InvalidDateList from "../../../components/InvalidDatesComponents/InvalidDatesListComponent";
  
 const ConfigPage = ({view, setView}) => {
   const navigate = useNavigate();
@@ -55,17 +56,20 @@ const ConfigPage = ({view, setView}) => {
     if(!form.date) alert("Por favor escolha uma data válida!")
 
     try {
-      await scheduleUnavailableDate(value.token, dayjs(form.date).format('YYYY-MM-DD'));
+      const body = {date: dayjs(form.date).format('YYYY-MM-DD'), description: "Nothing"}
+      await createInvalidDate(value.token, body);
       alert("Indisponibilidade agendada!");
       resetForm();
       setUnavailableConfirmationView(false);
     } catch (error) {
-      if(error.reponse.status === 401) {
+      console.log(error)
+      if(error.response.status === 401) {
         alert("Usuario sem autorização!");
         setValue({});
         navigate("/");
       }
       alert("Ouve um erro!");
+      setUnavailableConfirmationView(false);
     }
   }
 
@@ -98,9 +102,10 @@ const ConfigPage = ({view, setView}) => {
             </span>
           </ConfigServicesArea>
           <UnavailabilityArea>
-            <Label>Adicionar indisponibilidade</Label>
+            <Label>Adicionar nova data invalida</Label>
             <DateSelect name="date" label="Adicionar indisponibilidade" handleForm={handleForm} value={form.date} />
             <UnavailableButton onClick={() => setUnavailableConfirmationView(true)} >Adicionar indisponibilidade</UnavailableButton>
+            <InvalidDateList />
           </UnavailabilityArea>
           <WalletComponent refetchController={view} />
         </ModalArea>
@@ -145,6 +150,8 @@ const ModalArea = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   p{
     color: #fff;

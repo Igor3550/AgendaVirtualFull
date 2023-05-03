@@ -169,3 +169,31 @@ export async function deleteTransaction(token, id) {
 
   return res;
 }
+
+export async function getAllInvalidDates(token) {
+  const header = createHeaders(token);
+  const res = await axios.get(`${baseURL}/invalidDate`, header);
+
+  return res;
+}
+
+export async function getInvalidDateByDate(token, date) {
+  const header = createHeaders(token);
+  const res = await axios.get(`${baseURL}/invalidDate/${date}`, header);
+
+  return res;
+}
+
+export async function createInvalidDate(token, body) {
+  const header = createHeaders(token);
+  const res = await axios.post(`${baseURL}/invalidDate`, body, header);
+
+  return res;
+}
+
+export async function deleteInvalidDate(token, id) {
+  const header = createHeaders(token);
+  const res = await axios.delete(`${baseURL}/invalidDate/${id}`, header);
+
+  return res;
+}
