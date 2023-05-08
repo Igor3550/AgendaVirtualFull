@@ -1,4 +1,4 @@
-FROM node:15
+FROM node:16.14.2
 
 WORKDIR /usr/src
 
@@ -9,7 +9,7 @@ EXPOSE 4000
 RUN npm i
 RUN npx prisma generate
 
-RUN apt-get update && apt-get install -y wget
+RUN apt-get -y update && apt-get install -y wget
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
