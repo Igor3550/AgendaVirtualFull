@@ -4,42 +4,41 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:12345@banco:5432/agendaVirtual"
 }
 
 model Service {
-  id        Int         @id   @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  price     Int 
+  price     Int
   duration  Int
-  createdAt DateTime    @default(now())
+  createdAt DateTime   @default(now())
   Schedule  Schedule[]
   Waiting   Waiting[]
 
   @@map("services")
-
 }
 
 model Schedule {
-  id          Int        @id   @default(autoincrement())
-  clientName  String 
-  date        String
-  hour        Int
-  service_id  Int
-  finished    Boolean    @default(false)
-  createdAt   DateTime   @default(now())
-  Service     Service    @relation(fields: [service_id], references: [id])
+  id         Int      @id @default(autoincrement())
+  clientName String
+  date       String
+  hour       Int
+  service_id Int
+  finished   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  Service    Service  @relation(fields: [service_id], references: [id])
 
   @@map("schedules")
 }
 
 model Waiting {
-  id          Int        @id   @default(autoincrement())
-  clientName  String 
-  date        DateTime 
-  service_id  Int
-  createdAt   DateTime   @default(now())
-  Service     Service    @relation(fields: [service_id], references: [id])
+  id         Int      @id @default(autoincrement())
+  clientName String
+  date       DateTime
+  service_id Int
+  createdAt  DateTime @default(now())
+  Service    Service  @relation(fields: [service_id], references: [id])
 
   @@map("waitings")
 }
