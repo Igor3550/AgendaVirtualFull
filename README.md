@@ -47,4 +47,4 @@ Algumas das tecnologias utilizadas para o desenvolvimento deste projeto:
 - 2 - rodar o docker-compose na pasta raiz do projeto
   #### `docker-compose up --build`
 
-#### OBS: A aplicação roda na porta :3000
+#### OBS: A aplicação roda na porta :80 > http://localhost:80
