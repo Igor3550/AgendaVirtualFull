@@ -41,6 +41,8 @@ Algumas das tecnologias utilizadas para o desenvolvimento deste projeto:
 - Docker;
 
 ## Clonar e rodar na sua máquina
+### Tested on Docker version > 23.0.6
+### Tested on Docker-compose version > 1.29.2
 
 - 1 - clonar esse repositório:
   #### `git clone https://github.com/Igor3550/AgendaVirtualFull.git`

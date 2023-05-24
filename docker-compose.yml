@@ -27,6 +27,8 @@ services:
   app_react:
     build: ./agenda-virtual-front
     container_name: app_react
+    environment:
+      REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
     volumes:
       - build_react:/var/www/html
     depends_on:

@@ -1,11 +1,10 @@
-FROM node:16.14.2
+FROM node:16
 
 # pasta para aonde vai o build
 WORKDIR /app
 
 COPY . .
 RUN npm i
-
 RUN npm run build
 
 RUN rm -rf /var/www/html
