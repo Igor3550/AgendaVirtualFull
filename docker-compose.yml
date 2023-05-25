@@ -14,7 +14,7 @@ services:
     build: ./agendaVirtual-back
     container_name: app_node
     ports:
-      - 5000:4000
+      - 5000:5000
     env_file:
       - ./agendaVirtual-back/.env.example
     volumes:

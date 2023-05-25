@@ -4,7 +4,7 @@ WORKDIR /usr/src
 
 COPY . .
 
-EXPOSE 4000
+EXPOSE 5000
 
 RUN npm i
 RUN npx prisma generate

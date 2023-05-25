@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:12345@banco:5432/agendaVirtual"
+  url      = "postgresql://postgres:12345@banco:5432/agendaVirtual" // env("DATABASE_URL")
 }
 
 model Service {
