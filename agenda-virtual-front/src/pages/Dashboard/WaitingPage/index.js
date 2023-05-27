@@ -12,7 +12,16 @@ import dayjs from "dayjs";
 const WaitingPage = () => {
   const [form, handleForm, resetForm] = useForm();
   const [addingLoading, setAddingLoading] = useState(false);
-  const { data, isLoading, refetch } = useQuery('get-waiting-list', getWaiting);
+  const { data, isLoading, refetch } = useQuery('get-waiting-list', handleGetWaiting);
+
+  async function handleGetWaiting() {
+    try {
+      return await getWaiting();
+    } catch (error) {
+      console.log(error);
+      alert("Ouve um erro!");
+    }
+  }
 
   async function handleAddToWaiting() {
     if(!form.name) return alert('Preencha corretamente!');

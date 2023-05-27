@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 RUN npm i
-RUN npm run build
+# RUN npm run build
 
 RUN rm -rf /var/www/html
 RUN mkdir -p /var/www/html

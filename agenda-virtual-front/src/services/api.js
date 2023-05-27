@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-// const baseURL = process.env.REACT_APP_BASE_URL // 'http://localhost/api'
+const baseURL = 'http://localhost/api'
 
-const api = axios.create({baseURL:'http://localhost/api'})
+const api = axios.create({baseURL})
 
 export async function getScheduleList() {
   const result = await api.get(`schedules`);
+  console.log(baseURL)
   return result.data;
 }
 
