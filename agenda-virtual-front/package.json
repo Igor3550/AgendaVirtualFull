@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development react-scripts start",
-    "build": "NODE_ENV=development react-scripts build",
+    "build": "node ./update-build.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -48,5 +48,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "buildDate": 1685157085183
 }
