@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   banco:
     image: postgres
@@ -24,9 +24,12 @@ services:
     command: "npm run dev:migrate"
     depends_on:
       - banco
+
   app_react:
     build: ./agenda-virtual-front
     container_name: app_react
+    env_file:
+      - ./agenda-virtual-front/.env.example
     volumes:
       - build_react:/var/www/html
     depends_on:

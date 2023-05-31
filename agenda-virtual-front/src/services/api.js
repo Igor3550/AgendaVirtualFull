@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_BASE_URL;
+const baseURL = 'http://localhost/api';
 
 function createHeaders(token) {
   const body = {
@@ -25,6 +25,7 @@ export async function signUp(body) {
 
 export async function verify(token) {
   const header = createHeaders(token);
+  console.log(process.env.REACT_APP_BASE_URL)
   const res = await axios.get(`${baseURL}/verify`, header);
 
   return res;
